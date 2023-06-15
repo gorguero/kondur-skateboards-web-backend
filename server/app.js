@@ -1,5 +1,5 @@
 const express = require('express');
-const port = 5000;
+require('dotenv').config();
 const app = express();
 
 //Rutas
@@ -10,6 +10,6 @@ app.get('/', (req, res) => {
     })
 })
 
-app.listen(port, () => {
-    console.log(`Puerto ${port} en marcha`);
+app.listen(process.env.PORT, () => {
+    console.log(`Puerto ${process.env.PORT} en marcha`);
 })
