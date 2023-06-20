@@ -1,37 +1,17 @@
 const {Router} = require('express');
-
+const {createUser, getUser, updateUser, deleteUser} = require('../controllers/usuarios');
 const router = Router();
 
 //Crear usuario
-router.post( '/', (req, res) => {
-    return res.json({
-        ok: true,
-        msg: 'Creando usuario'
-    })
-} )
+router.post( '/', createUser )
 
 //Obtener usuario
-router.get( '/', (req, res) => {
-    return res.json({
-        ok: true,
-        msg: 'Obteniendo usuario'
-    })
-} )
+router.get( '/', getUser )
 
 //Editar usuario
-router.put( '/:id', (req, res) => {
-    return res.json({
-        ok: true,
-        msg: 'Editando usuario'
-    })
-} )
+router.put( '/:id', updateUser )
 
 //Eliminar usuario
-router.delete( '/', (req, res) => {
-    return res.json({
-        ok: true,
-        msg: 'Eliminando usuario'
-    })
-} )
+router.delete( '/', deleteUser )
 
 module.exports = router;
