@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 //Conexión hacia BD 
 const dbCONN = async() => {
@@ -14,6 +15,4 @@ const dbCONN = async() => {
     }
 }
 
-module.exports = {
-    dbCONN
-}
+export default dbCONN;
