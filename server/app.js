@@ -1,16 +1,18 @@
-const express = require('express');
-const {dbCONN} = require('./database/db');
-require('dotenv').config();
+import express  from 'express';
+import "dotenv/config.js";
+
+import dbCONN from "./database/db.js";
+import usuarioRoutes from './routes/usuarios.js';
+
 const app = express();
 
 dbCONN(); //Conexion a la bd
 
 //Rutas
-
 app.use( express.json() ); //Lectura del json
 
 //Rutas de Usuarios
-app.use('', require('./routes/usuarios'));
+app.use('', usuarioRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);

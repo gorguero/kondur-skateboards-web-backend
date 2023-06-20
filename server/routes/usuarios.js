@@ -1,7 +1,9 @@
-const {Router} = require('express');
-const {check} = require('express-validator');
-const {validarCampos} = require('../middlewares/validaciones');
-const {createUser, getUser, updateUser, deleteUser} = require('../controllers/usuarios');
+import Router from 'express';
+import {check} from 'express-validator';
+
+import { validarCampos } from '../middlewares/validaciones.js';
+import {createUser, getUser, updateUser, deleteUser} from '../controllers/usuarios.js';
+
 const router = Router();
 
 //Crear usuario
@@ -23,4 +25,4 @@ router.put( '/:id', updateUser )
 //Eliminar usuario
 router.delete( '/', deleteUser )
 
-module.exports = router;
+export default router;

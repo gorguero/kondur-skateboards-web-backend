@@ -1,5 +1,5 @@
-const {response} = require('express');
-const Usuario = require('../models/usuario');
+import response from 'express';
+import Usuario from '../models/usuario.js';
 
 
 //Crear usuario
@@ -64,7 +64,7 @@ const deleteUser = (req, res) => {
     })
 }
 
-module.exports = {
+export {
     createUser,
     getUser,
     updateUser,

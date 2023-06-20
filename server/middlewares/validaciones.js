@@ -1,5 +1,7 @@
-const {response} = require('express');
-const {validationResult} = require('express-validator');
+// const {response} = require('express');
+// const {validationResult} = require('express-validator');
+import response from 'express';
+import { validationResult } from 'express-validator';
 
 const validarCampos = (req, res=response, next) => {
 
@@ -15,6 +17,6 @@ const validarCampos = (req, res=response, next) => {
     next();
 }
 
-module.exports = {
+export {
     validarCampos
 }
