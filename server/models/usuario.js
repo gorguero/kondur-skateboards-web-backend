@@ -35,7 +35,7 @@ const UsuarioSchema = Schema({
     },
     rol: {
         type: String,
-        require: true,
+        required: true,
         default: 'USER_ROLE'
     }
 });
