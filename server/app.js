@@ -3,9 +3,11 @@ const {dbCONN} = require('./database/db');
 require('dotenv').config();
 const app = express();
 
-// dbCONN(); //Conexion a la bd
+dbCONN(); //Conexion a la bd
 
 //Rutas
+
+app.use( express.json() ); //Lectura del json
 
 //Rutas de Usuarios
 app.use('', require('./routes/usuarios'));
