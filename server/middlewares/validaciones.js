@@ -1,5 +1,3 @@
-// const {response} = require('express');
-// const {validationResult} = require('express-validator');
 import response from 'express';
 import { validationResult } from 'express-validator';
 

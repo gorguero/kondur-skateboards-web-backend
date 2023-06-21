@@ -29,10 +29,11 @@ const UsuarioSchema = Schema({
         { calle1: String, calle2: String, altura: String, cod_postal: String }
     ],
     creadoEn: {
-        type: String
+        type: Date,
+        default: Date.now()
     },
     actualizadoEn: {
-        type: String
+        type: Date
     },
     rol: {
         type: String,
