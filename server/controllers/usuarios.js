@@ -14,12 +14,12 @@ const createUser = async(req, res=response) => {
 
         //Encripta la contraseña
         const salt = bcryptjs.genSaltSync();
-        usuario.password = bcryptjs.hashSync(password, salt)
+        usuario.password = bcryptjs.hashSync(password, salt);
 
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
-        res.json({
+        res.status(201).json({
             ok: true,
             usuario
         })

@@ -9,10 +9,16 @@ const isRoleValid = async(rol = '') => {
 
 const isEmailExist = async(email = '') => {
     const existEmail = await Usuario.findOne({ email });
-    if( existEmail) throw new Error(`El email: ${email} ya está registrado en la BD.`);
+    if( existEmail) throw new Error(`El email: ${email} ya está registrado.`);
+}
+
+const isNicknameExist = async(nickname = '') => {
+    const existNickname = await Usuario.findOne({nickname});
+    if( existNickname ) throw new Error(`El nickname: ${nickname} ya está registrado.`);
 }
 
 export {
     isRoleValid,
-    isEmailExist
+    isEmailExist,
+    isNicknameExist
 }

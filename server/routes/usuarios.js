@@ -1,7 +1,7 @@
 import Router from 'express';
 import {check} from 'express-validator';
 
-import {isRoleValid, isEmailExist} from '../helpers/db-validations.js';
+import { isRoleValid, isEmailExist, isNicknameExist } from '../helpers/db-validations.js';
 import { validarCampos } from '../middlewares/validaciones.js';
 import {createUser, getUser, updateUser, deleteUser} from '../controllers/usuarios.js';
 
@@ -12,6 +12,7 @@ router.post( '/', [
     check('nombre', "El nombre es obligatorio.").not().isEmpty(),
     check('apellido', "El apellido es obligatorio.").not().isEmpty(),
     check('nickname', "El nombre de usuario es obligatorio.").not().isEmpty(),
+    check('nickname').custom( isNicknameExist ),
     check('password', "La contraseña debe ser mayor a 6 caracteres.").isLength({min:6}),
     check('email', "El email es obligatorio.").isEmail(),
     check('email').custom( isEmailExist ),
