@@ -1,6 +1,5 @@
 // const mongoose = require('mongoose');
 import mongoose from "mongoose";
-
 //Conexión hacia BD 
 const dbCONN = async() => {
     try {
