@@ -1,31 +1,25 @@
 import response from 'express';
 import Usuario from '../models/usuario.js';
+import bcryptjs from 'bcryptjs';
 
 
 //Crear usuario
 const createUser = async(req, res=response) => {
-    
-    const { email, password } = req.body;
+
+    const { nombre, apellido, nickname, email, password, rol } = req.body;
 
     try{
 
-        //Verificamos si existe el email
-        const existEmail = await Usuario.findOne({ email });
+        const usuario = new Usuario( {nombre, apellido, nickname, email, password, rol} );
 
-        if( existEmail ){
-            res.status(400).json({
-                ok: false,
-                msg: 'Email ya existente'
-            })
-            return;
-        }
-
-        const usuario = new Usuario( req.body )
+        //Encripta la contraseña
+        const salt = bcryptjs.genSaltSync();
+        usuario.password = bcryptjs.hashSync(password, salt);
 
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
-        res.json({
+        res.status(201).json({
             ok: true,
             usuario
         })
