@@ -1,26 +1,26 @@
-// const {Schema, model} = require('mongoose');
 import { Schema, model } from "mongoose";
 
 const UsuarioSchema = Schema({
     nombre: {
         type: String,
-        required: true
+        required: [true, 'El nombre es obligatorio']
     },
     apellido: {
         type: String,
-        required: true
+        required: [true, 'El apellido es obligatorio']
     },
     nickname: {
         type: String,
-        required: true
+        required: [true, 'El nickname es obligatorio']
     },
     email: {
         type: String,
-        required: true
+        required: [true, 'El email es obligatorio'],
+        unique: true
     },
     password:{
         type: String,
-        required: true
+        required: [true, 'La contraseña es obligatoria']
     },
     repeatPassowrd: {
         type: String
@@ -38,7 +38,7 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        default: 'USER_ROLE'
+        emun: ['ADMIN_ROLE', 'USER_ROLE']
     }
 });
 

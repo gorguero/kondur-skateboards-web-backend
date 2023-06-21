@@ -5,11 +5,13 @@ import bcryptjs from 'bcryptjs';
 
 //Crear usuario
 const createUser = async(req, res=response) => {
-    
-    const { nombre, apellido, nickname, email, password } = req.body;
-    const usuario = new Usuario( {nombre, apellido, nickname, email, password} );
+
+    const { nombre, apellido, nickname, email, password, rol } = req.body;
 
     try{
+
+        const usuario = new Usuario( {nombre, apellido, nickname, email, password, rol} );
+
         //Verificamos si existe el email
         const existEmail = await Usuario.findOne({ email });
 
