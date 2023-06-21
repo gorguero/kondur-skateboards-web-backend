@@ -44,7 +44,7 @@ const UsuarioSchema = Schema({
 
 //Renombra el _id
 UsuarioSchema.method('toJSON', function() {
-    const { _id, ...object } = this.toObject();
+    const { __v, password, _id, ...object } = this.toObject();
     object.uid = _id;
     return object;
 })
