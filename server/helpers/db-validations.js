@@ -2,7 +2,7 @@ import Check from '../models/check.js';
 import Role from '../models/role.js';
 import Usuario from '../models/usuario.js';
 
-
+// Validations for Users
 const isRoleValid = async(rol = '') => {
     const existRole = await Role.findOne({rol});
     if( !existRole ) throw new Error(`El rol ${rol} no está registrado en la BD.`);
@@ -23,6 +23,8 @@ const isUserExist = async(id) => {
     if( !existUser ) throw new Error(`No existe un usuario con el id ${id}`);
 }
 
+
+// Validations for Checks
 const isTitleExist = async(titulo = '') => {
     const existTitle = await Check.findOne({titulo});
     if( existTitle ) throw new Error(`El titulo: ${titulo} ya está registrado.`);
@@ -30,13 +32,23 @@ const isTitleExist = async(titulo = '') => {
 
 const isDescriptionExist = async(descripcion = '') => {
     const existTitle = await Check.findOne({descripcion});
-    if( existTitle ) throw new Error(`El titulo: ${descripcion} ya está registrado.`);
+    if( existTitle ) throw new Error(`La descripción ya está registrada.`);
 }
 
 const isUrlVideoExist = async(url_video = '') => {
     const existUrl = await Check.findOne({url_video});
     if( existUrl ) throw new Error('La url del video ya se encuentra registrada.');
 }
+
+const isCheckExist = async(id) => {
+    const existCheck = await Check.findById(id);
+    if( !existCheck ) throw new Error(`No existe un check con el id ${id}`);
+}
+
+
+
+
+
 
 export {
     isRoleValid,
@@ -45,5 +57,6 @@ export {
     isUserExist,
     isTitleExist,
     isDescriptionExist,
-    isUrlVideoExist
+    isUrlVideoExist,
+    isCheckExist
 }

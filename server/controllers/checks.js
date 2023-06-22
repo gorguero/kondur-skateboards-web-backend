@@ -16,7 +16,7 @@ const createCheck = async(req, res = response) => {
         res.status(201).json({
             msg: 'Creado con éxitosamente.',
             check
-        })
+        });
 
     } catch (error) {
         console.log(error)
@@ -35,15 +35,23 @@ const getCheck = async(req, res) => {
     res.status(201).json({
         ok: true,
         checks
-    })
+    });
 }
 
 //Actualizar Check
-const updateCheck = async(req, res) => {
-    res.status(201).json({
-        ok: true,
-        msg: 'Check actualizado'
-    })
+const updateCheck = async(req, res = response) => {
+
+    const {id} = req.params;
+    const { _id, ...resto } = req.body;
+
+    resto.actualizadoEn = Date.now();
+
+    const check = await Check.findByIdAndUpdate(id, resto, {new: true});
+
+    res.status(200).json({
+        msg: 'Check actualizado',
+        check
+    });
 }
 
 //Delete Check
