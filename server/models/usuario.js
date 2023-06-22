@@ -33,12 +33,17 @@ const UsuarioSchema = Schema({
         default: Date.now()
     },
     actualizadoEn: {
-        type: Date
+        type: Date,
+        default: Date.now()
     },
     rol: {
         type: String,
         required: true,
         emun: ['ADMIN_ROLE', 'USER_ROLE']
+    },
+    estado:{
+        type: Boolean,
+        default: true
     }
 });
 

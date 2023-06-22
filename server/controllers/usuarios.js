@@ -43,10 +43,22 @@ const getUser = (req, res) => {
 }
 
 //Editar usuario
-const updateUser = (req, res) => {
+const updateUser = async(req, res = response) => {
+
+    const {id} = req.params;
+    const { _id, password, creadoEn, estado, ...resto } = req.body;
+
+    if( password ){
+        //Encripta la contraseña
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(password, salt);
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+
     return res.json({
         ok: true,
-        msg: 'Editando usuario desde el controller'
+        usuario
     })
 }
 
