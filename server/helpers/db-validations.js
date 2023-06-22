@@ -17,8 +17,14 @@ const isNicknameExist = async(nickname = '') => {
     if( existNickname ) throw new Error(`El nickname: ${nickname} ya está registrado.`);
 }
 
+const isUserExist = async(id) => {
+    const existUser = await Usuario.findById(id);
+    if( !existUser ) throw new Error(`No existe un usuario con el id ${id}`);
+}
+
 export {
     isRoleValid,
     isEmailExist,
-    isNicknameExist
+    isNicknameExist,
+    isUserExist
 }
