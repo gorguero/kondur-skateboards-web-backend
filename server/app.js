@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import dbCONN from "./database/db.js";
 import usuarioRoutes from './routes/usuarios.js';
+import checksRoutes from './routes/checks.js';
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use( express.json() ); //Lectura del json
 
 //Rutas de Usuarios
 app.use('/api/usuarios', usuarioRoutes);
+
+//Rutas de Checks
+app.use('/api/checks', checksRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);

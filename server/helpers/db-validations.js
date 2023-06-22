@@ -1,3 +1,4 @@
+import Check from '../models/check.js';
 import Role from '../models/role.js';
 import Usuario from '../models/usuario.js';
 
@@ -22,9 +23,27 @@ const isUserExist = async(id) => {
     if( !existUser ) throw new Error(`No existe un usuario con el id ${id}`);
 }
 
+const isTitleExist = async(titulo = '') => {
+    const existTitle = await Check.findOne({titulo});
+    if( existTitle ) throw new Error(`El titulo: ${titulo} ya está registrado.`);
+}
+
+const isDescriptionExist = async(descripcion = '') => {
+    const existTitle = await Check.findOne({descripcion});
+    if( existTitle ) throw new Error(`El titulo: ${descripcion} ya está registrado.`);
+}
+
+const isUrlVideoExist = async(url_video = '') => {
+    const existUrl = await Check.findOne({url_video});
+    if( existUrl ) throw new Error('La url del video ya se encuentra registrada.');
+}
+
 export {
     isRoleValid,
     isEmailExist,
     isNicknameExist,
-    isUserExist
+    isUserExist,
+    isTitleExist,
+    isDescriptionExist,
+    isUrlVideoExist
 }
