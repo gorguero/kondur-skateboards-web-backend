@@ -66,10 +66,16 @@ const updateUser = async(req, res = response) => {
 }
 
 //Eliminar usuario
-const deleteUser = (req, res) => {
+const deleteUser = async(req, res) => {
+
+    const {id} = req.params;
+
+    //Eliminado lógico
+    const usuario = await Usuario.findByIdAndUpdate(id, {estado: false}, {new: true});
+
     return res.json({
         ok: true,
-        msg: 'Eliminando usuario desde controller'
+        usuario
     })
 }
 
