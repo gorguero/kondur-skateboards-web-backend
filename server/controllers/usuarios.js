@@ -1,31 +1,25 @@
 import response from 'express';
 import Usuario from '../models/usuario.js';
+import bcryptjs from 'bcryptjs';
 
 
 //Crear usuario
 const createUser = async(req, res=response) => {
-    
-    const { email, password } = req.body;
+
+    const { nombre, apellido, nickname, email, password, rol } = req.body;
 
     try{
 
-        //Verificamos si existe el email
-        const existEmail = await Usuario.findOne({ email });
+        const usuario = new Usuario( {nombre, apellido, nickname, email, password, rol} );
 
-        if( existEmail ){
-            res.status(400).json({
-                ok: false,
-                msg: 'Email ya existente'
-            })
-            return;
-        }
-
-        const usuario = new Usuario( req.body )
+        //Encripta la contraseña
+        const salt = bcryptjs.genSaltSync();
+        usuario.password = bcryptjs.hashSync(password, salt);
 
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
-        res.json({
+        res.status(201).json({
             ok: true,
             usuario
         })
@@ -41,26 +35,47 @@ const createUser = async(req, res=response) => {
 }
 
 //Obtener usuarios
-const getUser = (req, res) => {
+const getUser = async(req, res) => {
+    
+    const usuarios = await Usuario.find();
+
     return res.json({
         ok: true,
-        msg: 'Obteniendo usuario desde controller'
+        usuarios
     })
 }
 
 //Editar usuario
-const updateUser = (req, res) => {
+const updateUser = async(req, res = response) => {
+
+    const {id} = req.params;
+    const { _id, password, creadoEn, estado, ...resto } = req.body;
+
+    if( password ){
+        //Encripta la contraseña
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(password, salt);
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
+
     return res.json({
         ok: true,
-        msg: 'Editando usuario desde el controller'
+        usuario
     })
 }
 
 //Eliminar usuario
-const deleteUser = (req, res) => {
+const deleteUser = async(req, res) => {
+
+    const {id} = req.params;
+
+    //Eliminado lógico
+    const usuario = await Usuario.findByIdAndUpdate(id, {estado: false}, {new: true});
+
     return res.json({
         ok: true,
-        msg: 'Eliminando usuario desde controller'
+        usuario
     })
 }
 
