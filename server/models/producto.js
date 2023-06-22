@@ -29,6 +29,10 @@ const productoSchema = Schema({
         type: Number,
         required: true
     },
+    estado:{
+        type: Boolean,
+        default: true
+    }
 });
 
 export default model('Producto', productoSchema);
