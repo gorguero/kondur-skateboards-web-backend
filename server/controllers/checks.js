@@ -30,7 +30,7 @@ const createCheck = async(req, res = response) => {
 //Obtener Check
 const getCheck = async(req, res) => {
 
-    const checks = await Check.find();
+    const checks = await Check.find({estado: true});
 
     res.status(201).json({
         ok: true,
@@ -56,10 +56,15 @@ const updateCheck = async(req, res = response) => {
 
 //Delete Check
 const deleteCheck = async(req, res) => {
-    res.status(201).json({
-        ok: true,
-        msg: 'Check eliminado'
-    })
+
+    const {id} = req.params;
+
+    const check = await Check.findByIdAndUpdate(id, {estado: false}, {new: true});
+
+    res.status(200).json({
+        msg: 'Check eliminado',
+        check
+    });
 }
 
 export {

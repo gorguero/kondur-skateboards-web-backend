@@ -47,7 +47,11 @@ router.put('/:id', [
 ],updateCheck);
 
 //Eliminar check
-router.delete('/:id', deleteCheck);
+router.delete('/:id', [
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( isCheckExist ),
+    validarCampos
+], deleteCheck);
 
 
 export default router;
