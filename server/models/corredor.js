@@ -18,6 +18,10 @@ const CorredorSchema = Schema({
     },
     facebook:{
         type: String
+    },
+    estado:{
+        type: Boolean,
+        default: true
     }
 });
 
