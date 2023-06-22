@@ -29,9 +29,12 @@ const createCheck = async(req, res = response) => {
 
 //Obtener Check
 const getCheck = async(req, res) => {
+
+    const checks = await Check.find();
+
     res.status(201).json({
         ok: true,
-        msg: 'Check obtenido'
+        checks
     })
 }
 
