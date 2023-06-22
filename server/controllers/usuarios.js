@@ -35,10 +35,13 @@ const createUser = async(req, res=response) => {
 }
 
 //Obtener usuarios
-const getUser = (req, res) => {
+const getUser = async(req, res) => {
+    
+    const usuarios = await Usuario.find();
+
     return res.json({
         ok: true,
-        msg: 'Obteniendo usuario desde controller'
+        usuarios
     })
 }
 
