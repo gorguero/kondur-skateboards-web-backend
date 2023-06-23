@@ -19,6 +19,14 @@ const CorredorSchema = Schema({
     facebook:{
         type: String
     },
+    creadoEn: {
+        type: Date,
+        default: Date.now()
+    },
+    actualizadoEn: {
+        type: Date,
+        default: Date.now()
+    },
     estado:{
         type: Boolean,
         default: true

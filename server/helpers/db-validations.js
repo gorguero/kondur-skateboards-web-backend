@@ -42,14 +42,20 @@ const isCheckExist = async(id) => {
 
 
 // Validations for Corredores
-const isCorredorExist = async(corredor = '') => {
-    const existCorredor = await Corredor.findOne({corredor});
-    if( existCorredor ) throw new Error(`${corredor} ya está registrado.`);
+const isCorredorExist = async(nombre_rider = '') => {
+    const existCorredor = await Corredor.findOne({nombre_rider});
+    if( existCorredor ) throw new Error(`${nombre_rider} ya está registrado.`);
 }
 const isBiografiaExist = async(biografia = '') => {
     const existBio = await Corredor.findOne({biografia});
     if( existBio ) throw new Error(`La biografía ya está registrada.`);
 }
+const isCorredorByIdExist = async(id) => {
+    const existCorredor = await Corredor.findById(id);
+    if( !existCorredor ) throw new Error(`No existe un corredor con el id ${id}`);
+}
+
+
 
 
 export {
@@ -62,5 +68,6 @@ export {
     isUrlVideoExist,
     isCheckExist,
     isCorredorExist,
-    isBiografiaExist
+    isBiografiaExist,
+    isCorredorByIdExist
 }

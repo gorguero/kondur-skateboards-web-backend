@@ -27,13 +27,29 @@ const createCorredor = async(req, res=response) => {
 }
 
 //Obtener corredores
-const getCorredor = (req, res) => {
+const getCorredor = async(req, res=response) => {
     
+    const corredores = await Corredor.find({estado: true});
+
+    res.status(200).json({
+        ok: true,
+        corredores
+    });
 }
 
-//Editar un corredor
-const updateCorredor = (req, res) => {
+//Actualizar un corredor
+const updateCorredor = async(req, res=response) => {
     
+    const {id} = req.params;
+    const { _id, ...resto } = req.body;
+
+    const corredor = await Corredor.findByIdAndUpdate(id, resto, {new: true});
+
+    res.status(200).json({
+        msg: 'Corredor actualizado',
+        corredor
+    });
+
 }
 
 //Eliminar un corredor
