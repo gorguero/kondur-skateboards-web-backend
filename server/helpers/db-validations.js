@@ -1,6 +1,7 @@
 import Check from '../models/check.js';
 import Role from '../models/role.js';
 import Usuario from '../models/usuario.js';
+import Producto from '../models/producto.js';
 
 // Validations for Users
 const isRoleValid = async(rol = '') => {
@@ -45,8 +46,16 @@ const isCheckExist = async(id) => {
     if( !existCheck ) throw new Error(`No existe un check con el id ${id}`);
 }
 
+//Validaciones Productos
 
-
+const isProductNameExist = async(nombreProducto = '') => {
+    const isProductNameExist = await Producto.findOne({nombreProducto});
+    if( isProductNameExist ) throw new Error(`El producto: ${nombreProducto} ya está registrado.`);
+}
+const isProductDescriptionExist = async(descripcion = '') => {
+    const ProductDescripcionExist = await Producto.findOne({descripcion});
+    if( ProductDescripcionExist ) throw new Error(`La descripcion: ${descripcion} ya se encuentra resgistrada.`);
+}
 
 
 
@@ -58,5 +67,7 @@ export {
     isTitleExist,
     isDescriptionExist,
     isUrlVideoExist,
-    isCheckExist
+    isCheckExist,
+    isProductNameExist,
+    isProductDescriptionExist
 }

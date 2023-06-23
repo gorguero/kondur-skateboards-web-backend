@@ -16,7 +16,7 @@ const createProducto = async (req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
-//Traer productos
+//Obtener Productos
 const getProductos = async (req, res)=>{
     try {
         const productos = await Producto.find();
@@ -26,7 +26,7 @@ const getProductos = async (req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
-//Actializar productos
+//Actializar producto
 const updateProducto = async(req, res)=>{
     try {
         const {nombreProducto, descripcion, imagen, precio, stock, id_categoria} = req.body;
@@ -51,7 +51,7 @@ const updateProducto = async(req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
-//Obtener un producto en especifico 
+//Buscar un Producto 
 const getProducto = async(req, res)=>{
     try {
         let producto = await Producto.findById(req.params.id);
