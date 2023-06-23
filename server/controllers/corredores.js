@@ -53,8 +53,17 @@ const updateCorredor = async(req, res=response) => {
 }
 
 //Eliminar un corredor
-const deleteCorredor = (req, res) => {
+const deleteCorredor = async(req, res) => {
     
+    const {id} = req.params;
+
+    const corredor = await Corredor.findByIdAndUpdate(id, {estado: false}, {new: true});
+
+    res.status(200).json({
+        msg: 'Corredor eliminado',
+        corredor
+    });
+
 }
 
 

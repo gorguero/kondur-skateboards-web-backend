@@ -35,6 +35,10 @@ router.put('/:id', [
 ], updateCorredor);
 
 //Eliminar un corredor
-router.delete('/:id', deleteCorredor);
+router.delete('/:id', [
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( isCorredorByIdExist ),
+    validarCampos
+], deleteCorredor);
 
 export default router;
