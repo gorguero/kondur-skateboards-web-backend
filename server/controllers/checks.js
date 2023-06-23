@@ -44,8 +44,6 @@ const updateCheck = async(req, res = response) => {
     const {id} = req.params;
     const { _id, ...resto } = req.body;
 
-    resto.actualizadoEn = Date.now();
-
     const check = await Check.findByIdAndUpdate(id, resto, {new: true});
 
     res.status(200).json({
