@@ -77,7 +77,7 @@ export {
     isDescriptionExist,
     isUrlVideoExist,
     isCheckExist,
-    isProductNameExist
+    isProductNameExist,
     isCorredorExist,
     isBiografiaExist,
     isCorredorByIdExist,
