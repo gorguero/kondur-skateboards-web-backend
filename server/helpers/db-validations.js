@@ -61,10 +61,6 @@ const isCorredorByIdExist = async(id) => {
     const existCorredor = await Corredor.findById(id);
     if( !existCorredor ) throw new Error(`No existe un corredor con el id ${id}`);
 }
-// const isCorredorDeleteByIdExist = async(id) => {
-//     const existCorredorDelete = await Corredor.findById(id);
-//     if( existCorredorDelete === false ) throw new Error(`El corredor con el id ${id} ya fue eliminado.`);
-// } To-do: Hay que validar si el estado es false para responder que un usuario fue eliminado(Aqui y en todos los delete)
 
 
 
@@ -81,4 +77,5 @@ export {
     isCorredorExist,
     isBiografiaExist,
     isCorredorByIdExist,
+    // isCorredorDeleteByIdExist
 }
