@@ -19,7 +19,8 @@ const productoSchema = Schema({
     },
     stock: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     creado_en: {
         type: Date,

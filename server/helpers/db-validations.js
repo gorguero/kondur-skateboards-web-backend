@@ -52,10 +52,6 @@ const isProductNameExist = async(nombreProducto = '') => {
     const isProductNameExist = await Producto.findOne({nombreProducto});
     if( isProductNameExist ) throw new Error(`El producto: ${nombreProducto} ya está registrado.`);
 }
-const isProductDescriptionExist = async(descripcion = '') => {
-    const ProductDescripcionExist = await Producto.findOne({descripcion});
-    if( ProductDescripcionExist ) throw new Error(`La descripcion: ${descripcion} ya se encuentra resgistrada.`);
-}
 
 
 
@@ -68,6 +64,5 @@ export {
     isDescriptionExist,
     isUrlVideoExist,
     isCheckExist,
-    isProductNameExist,
-    isProductDescriptionExist
+    isProductNameExist
 }
