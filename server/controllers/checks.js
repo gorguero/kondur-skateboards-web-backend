@@ -30,39 +30,67 @@ const createCheck = async(req, res = response) => {
 //Obtener Check
 const getCheck = async(req, res) => {
 
-    const checks = await Check.find({estado: true});
+    try {
+        
+        const checks = await Check.find({estado: true});
 
-    res.status(201).json({
-        ok: true,
-        checks
-    });
+        res.status(201).json({
+            ok: true,
+            checks
+        });
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Hubo un error al obtener un check'
+        });
+    }
 }
 
 //Actualizar Check
 const updateCheck = async(req, res = response) => {
 
-    const {id} = req.params;
-    const { _id, ...resto } = req.body;
+    try {
+        
+        const {id} = req.params;
+        const { _id, ...resto } = req.body;
+    
+        const check = await Check.findByIdAndUpdate(id, resto, {new: true});
+    
+        res.status(200).json({
+            msg: 'Check actualizado',
+            check
+        });
 
-    const check = await Check.findByIdAndUpdate(id, resto, {new: true});
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Hubo un error al actualizar un check'
+        });
+    }
 
-    res.status(200).json({
-        msg: 'Check actualizado',
-        check
-    });
 }
 
 //Delete Check
 const deleteCheck = async(req, res) => {
 
-    const {id} = req.params;
+    try {
+        
+        const {id} = req.params;
 
-    const check = await Check.findByIdAndUpdate(id, {estado: false}, {new: true});
+        const check = await Check.findByIdAndUpdate(id, {estado: false}, {new: true});
 
-    res.status(200).json({
-        msg: 'Check eliminado',
-        check
-    });
+        res.status(200).json({
+            msg: 'Check eliminado',
+            check
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hubo un error al eliminar un check'
+        });
+    }
 }
 
 export {
