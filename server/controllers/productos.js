@@ -19,7 +19,7 @@ const createProducto = async (req, res)=>{
 //Obtener Productos
 const getProductos = async (req, res)=>{
     try {
-        const productos = await Producto.find();
+        const productos = await Producto.find({estado: true});
         res.json(productos);
     } catch (error) {
         console.log(error);
