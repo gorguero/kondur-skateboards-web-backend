@@ -4,6 +4,7 @@ import {check} from 'express-validator';
 import { isRoleValid, isEmailExist, isNicknameExist, isUserExist } from '../helpers/db-validations.js';
 import { validarCampos } from '../middlewares/validaciones.js';
 import {createUser, getUser, updateUser, deleteUser} from '../controllers/usuarios.js';
+import validarJWT from '../middlewares/validar-jwt.js';
 
 const router = Router();
 
@@ -40,6 +41,7 @@ router.put( '/:id', [
 
 //Eliminar usuario
 router.delete( '/:id', [
+    validarJWT,
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isUserExist ),
     validarCampos
