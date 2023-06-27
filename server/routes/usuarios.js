@@ -5,7 +5,7 @@ import { isRoleValid, isEmailExist, isNicknameExist, isUserExist } from '../help
 import { validarCampos } from '../middlewares/validaciones.js';
 import {createUser, getUser, updateUser, deleteUser} from '../controllers/usuarios.js';
 import validarJWT from '../middlewares/validar-jwt.js';
-import { isAdminRole } from '../middlewares/validar-roles.js';
+import { isAdminRole, tieneRol } from '../middlewares/validar-roles.js';
 
 const router = Router();
 
@@ -43,7 +43,8 @@ router.put( '/:id', [
 //Eliminar usuario
 router.delete( '/:id', [
     validarJWT,
-    isAdminRole,
+    // isAdminRole,
+    tieneRol('ADMIN_ROLE'),
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isUserExist ),
     validarCampos
