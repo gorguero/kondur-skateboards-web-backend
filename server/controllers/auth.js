@@ -2,6 +2,7 @@ import { response } from "express";
 import bcryptjs from 'bcryptjs';
 
 import Usuario from '../models/usuario.js';
+import generarJWT from '../helpers/generarjwt.js';
 
 const login = async(req, res=response) => {
 
@@ -30,10 +31,12 @@ const login = async(req, res=response) => {
         });
     }
 
+    //Generamos un JWT
+    const token = await generarJWT( usuario.id );
     res.status(200).json({
-        msg: 'Logueado papss'
-    })
-
+        usuario,
+        token
+    });
 }
 
 export {
