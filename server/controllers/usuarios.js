@@ -91,15 +91,12 @@ const deleteUser = async(req, res) => {
     const {id} = req.params;
 
     try {
-        
-        const uid = req.uid;
 
         //Eliminado lógico
         const usuario = await Usuario.findByIdAndUpdate(id, {estado: false}, {new: true});
 
         return res.json({
-            usuario,
-            uid
+            usuario
         });
 
     } catch (error) {
