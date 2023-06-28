@@ -17,7 +17,7 @@ router.get('/', getProductos);
 
 //Actualizar Producto
 router.put('/:id',[
-    check('nombreProducto').custom(isProductNameExist)
+    check('nombreProducto').custom(isProductNameExist),
 ],updateProducto);
 
 //Buscar un Producto
