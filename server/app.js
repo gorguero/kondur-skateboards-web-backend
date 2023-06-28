@@ -6,6 +6,7 @@ import dbCONN from "./database/db.js";
 import usuarioRoutes from './routes/usuarios.js';
 import checksRoutes from './routes/checks.js';
 import productoRoutes from "./routes/productos.js";
+import corredoresRoutes from './routes/corredores.js';
 
 const app = express();
 
@@ -24,6 +25,9 @@ app.use('/api/checks', checksRoutes);
 
 //Rutas de producto
 app.use('/api/productos',productoRoutes);
+
+//Rutas de Team
+app.use('/api/team', corredoresRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);
