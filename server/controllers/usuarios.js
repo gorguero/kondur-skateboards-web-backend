@@ -87,22 +87,21 @@ const updateUser = async(req, res = response) => {
 
 //Eliminar usuario
 const deleteUser = async(req, res) => {
+    
+    const {id} = req.params;
 
     try {
-        
-        const {id} = req.params;
 
         //Eliminado lógico
         const usuario = await Usuario.findByIdAndUpdate(id, {estado: false}, {new: true});
 
         return res.json({
-            ok: true,
             usuario
         });
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({
+        res.status(400).json({
             ok: false,
             msg: 'Hubo un error al eliminar un usuario.'
         });
