@@ -11,14 +11,18 @@ router.post('/',[
     check('nombreProducto').custom(isProductNameExist),
     validarCampos
 ],createProducto);
+
 //Obtener Productos
 router.get('/', getProductos);
+
 //Actualizar Producto
 router.put('/:id',[
     check('nombreProducto').custom(isProductNameExist),
 ],updateProducto);
+
 //Buscar un Producto
 router.get('/:id', getProducto);
+
 //Borrado logico de un Producto
 router.delete('/:id', deleteProducto);
 
