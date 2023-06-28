@@ -26,9 +26,15 @@ const productoSchema = Schema({
         type: Date,
         default: Date.now()
     },
-    id_categoria: {
-        type: Number,
+    categoria: {
+        type: String,
         required: true
+    },
+    talle:{
+        type: String
+    },
+    medida:{
+        type: Number
     },
     estado:{
         type: Boolean,
