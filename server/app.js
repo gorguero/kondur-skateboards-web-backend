@@ -7,6 +7,7 @@ import usuarioRoutes from './routes/usuarios.js';
 import checksRoutes from './routes/checks.js';
 import productoRoutes from "./routes/productos.js";
 import corredoresRoutes from './routes/corredores.js';
+import ventasRoutes from './routes/ventas.js';
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use('/api/productos',productoRoutes);
 
 //Rutas de Team
 app.use('/api/team', corredoresRoutes);
+
+//Rutas de Ventas
+app.use('/api/ventas', ventasRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);
