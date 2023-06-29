@@ -34,7 +34,7 @@ const productoSchema = Schema({
         type: String
     },
     medida:{
-        type: Number
+        type: String
     },
     estado:{
         type: Boolean,
