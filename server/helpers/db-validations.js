@@ -42,10 +42,20 @@ const isCheckExist = async(id) => {
 }
 
 //Validaciones Productos
-
 const isProductNameExist = async(nombreProducto = '') => {
     const isProductNameExist = await Producto.findOne({nombreProducto});
     if( isProductNameExist ) throw new Error(`El producto: ${nombreProducto} ya está registrado.`);
+}
+const isDescriptionProductExist = async(descripcion = '') => {
+    const isDescriptionProductExist = await Producto.findOne({descripcion});
+    if( isDescriptionProductExist ) throw new Error(`La descripción ya está registrada.`);
+}
+const isValueMin = async(precio) => {
+    if( precio < 0 ) throw new Error(`No puede ingresar valores negativos`);
+}
+const isProductExistById = async(id) => {
+    const existProduct = await Producto.findById(id);
+    if( !existProduct ) throw new Error(`No existe un producto con el id ${id}`);
 }
 
 // Validations for Corredores
@@ -77,5 +87,8 @@ export {
     isCorredorExist,
     isBiografiaExist,
     isCorredorByIdExist,
+    isDescriptionProductExist,
+    isValueMin,
+    isProductExistById
     // isCorredorDeleteByIdExist
 }
