@@ -1,6 +1,7 @@
 import response from 'express';
 import Usuario from '../models/usuario.js';
 import bcryptjs from 'bcryptjs';
+import generarJWT from '../helpers/generarjwt.js';
 
 
 //Crear usuario
@@ -19,9 +20,12 @@ const createUser = async(req, res=response) => {
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
+        const token = await generarJWT( usuario.uid );
+
         res.status(201).json({
             ok: true,
-            usuario
+            usuario,
+            token
         })
 
     }catch(error){
