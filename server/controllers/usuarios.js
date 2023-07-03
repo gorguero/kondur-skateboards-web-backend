@@ -6,11 +6,11 @@ import bcryptjs from 'bcryptjs';
 //Crear usuario
 const createUser = async(req, res=response) => {
 
-    const { nombre, apellido, nickname, email, password, rol } = req.body;
+    const { nombre, apellido, nickname, email, password } = req.body;
 
     try{
 
-        const usuario = new Usuario( {nombre, apellido, nickname, email, password, rol} );
+        const usuario = new Usuario( {nombre, apellido, nickname, email, password} );
 
         //Encripta la contraseña
         const salt = bcryptjs.genSaltSync();
