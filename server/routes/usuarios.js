@@ -18,7 +18,6 @@ router.post( '/', [
     check('password', "La contraseña debe ser mayor a 6 caracteres.").isLength({min:6}),
     check('email', "El email es obligatorio.").isEmail(),
     check('email').custom( isEmailExist ),
-    // check('rol').custom( isRoleValid ),
     validarCampos
 ] , createUser )
 

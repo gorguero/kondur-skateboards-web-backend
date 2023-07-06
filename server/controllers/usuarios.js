@@ -7,11 +7,11 @@ import generarJWT from '../helpers/generarjwt.js';
 //Crear usuario
 const createUser = async(req, res=response) => {
 
-    const { nombre, apellido, nickname, email, password } = req.body;
+    const { nombre, apellido, nickname, email, password, direcciones } = req.body;
 
     try{
 
-        const usuario = new Usuario( {nombre, apellido, nickname, email, password} );
+        const usuario = new Usuario( {nombre, apellido, nickname, email, password, direcciones} );
 
         //Encripta la contraseña
         const salt = bcryptjs.genSaltSync();
