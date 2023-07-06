@@ -1,5 +1,24 @@
 import { Schema, model } from "mongoose";
 
+const direcciones = Schema({
+    calle1: {
+        type: String,
+        default: ''
+    }, 
+    calle2: {
+        type: String,
+        default: ''
+    },
+    altura: {
+        type: String,
+        default: ''
+    },
+    codpostal: {
+        type: String,
+        default: ''
+    }
+});
+
 const UsuarioSchema = Schema({
     nombre: {
         type: String,
@@ -25,9 +44,7 @@ const UsuarioSchema = Schema({
     repeatPassowrd: {
         type: String
     },
-    direcciones: [
-        { calle1: String, calle2: String, altura: String, cod_postal: String }
-    ],
+    direcciones: [direcciones],
     creadoEn: {
         type: Date,
         default: Date.now()
@@ -39,7 +56,8 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        emun: ['ADMIN_ROLE', 'USER_ROLE']
+        default: 'USER_ROLE',
+        default: 'USER_ROLE'
     },
     estado:{
         type: Boolean,
