@@ -29,11 +29,8 @@ router.get('/', getProductos);
 router.put('/:id',[
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isProductExistById ),
-    check('nombreProducto').custom(isProductNameExist),
     check('nombreProducto', 'El nombre del producto es obligatorio.').not().isEmpty(),
-    check('nombreProducto').custom(isProductNameExist),
     check('descripcion', 'La descripción del producto es requerida.').not().isEmpty(),
-    check('descripcion').custom(isDescriptionProductExist),
     check('descripcion', 'Debe contener solamente 250 caracteres.').isLength({max: 250}),
     check('imagen', 'La url de la imagen es requerida.').not().isEmpty(),
     check('precio', 'El valor del precio es requerido.').not().isEmpty(),

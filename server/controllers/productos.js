@@ -30,7 +30,7 @@ const getProductos = async (req, res)=>{
 //Actializar producto
 const updateProducto = async(req, res)=>{
     try {
-        const {nombreProducto, descripcion, imagen, precio, stock, categoria} = req.body;
+        const {nombreProducto, descripcion, imagen, precio, stock, categoria, medida, talle} = req.body;
         let producto = await Producto.findById(req.params.id);
 
         if(!producto){
@@ -43,6 +43,8 @@ const updateProducto = async(req, res)=>{
         producto.precio = precio;
         producto.stock = stock;
         producto.categoria = categoria;
+        producto.medida = medida;
+        producto.talle = talle;
 
         producto = await Producto.findOneAndUpdate({_id: req.params.id}, producto, {new: true})
         res.json(producto);

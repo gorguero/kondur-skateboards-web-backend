@@ -31,10 +31,12 @@ const productoSchema = Schema({
         required: true
     },
     talle:{
-        type: String
+        type: String,
+        default: "-"
     },
     medida:{
-        type: String
+        type: String,
+        default: "-"
     },
     estado:{
         type: Boolean,
