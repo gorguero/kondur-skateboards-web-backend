@@ -14,11 +14,9 @@ router.post('/', [
     check('descripcion', 'La descripción es obligatoria.').not().isEmpty(),
     check('descripcion', 'Debe contener solamente 250 caracteres.').isLength({max: 250}),
     check('descripcion').custom( isDescriptionExist ),
-    check('filmer_name', 'El nombre del filmer es requerido.').not().isEmpty(),
-    check('filmer_name', 'Solo puede contener hasta 54 caracteres.').isLength({max: 54}),
-    check('contacto', 'El contacto es obligatorio.').not().isEmpty(),
-    check('contacto', 'Solo puede contener hasta 40 caracteres.').isLength({max: 40}),
-    check('img_filmer', 'La url de la imagen es obligatoria.').not().isEmpty(),
+    check('ig_filmer', 'El instagram del filmer es requerido.').not().isEmpty(),
+    check('ig_rider', 'El instagram del rider es obligatoria.').not().isEmpty(),
+    check('img_rider', 'la imagen del rider es obligatoria').not().isEmpty(),
     check('url_video', 'La url del video  es obligatoria.').not().isEmpty(),
     check('url_video').custom( isUrlVideoExist ),
     validarCampos
@@ -36,15 +34,20 @@ router.put('/:id', [
     check('descripcion', 'La descripción es obligatoria.').not().isEmpty(),
     check('descripcion', 'Debe contener solamente 250 caracteres.').isLength({max: 250}),
     check('descripcion').custom( isDescriptionExist ),
-    check('filmer_name', 'El nombre del filmer es requerido.').not().isEmpty(),
-    check('filmer_name', 'Solo puede contener hasta 54 caracteres.').isLength({max: 54}),
-    check('contacto', 'El contacto es obligatorio.').not().isEmpty(),
-    check('contacto', 'Solo puede contener hasta 40 caracteres.').isLength({max: 40}),
-    check('img_filmer', 'La url de la imagen es obligatoria.').not().isEmpty(),
+    check('ig_filmer', 'El instagram del filmer es requerido.').not().isEmpty(),
+    check('ig_rider', 'El instagram del rider es obligatoria.').not().isEmpty(),
+    check('img_rider', 'la imagen del rider es obligatoria').not().isEmpty(),
     check('url_video', 'La url del video  es obligatoria.').not().isEmpty(),
     check('url_video').custom( isUrlVideoExist ),
     validarCampos
 ],updateCheck);
+
+//Buscar un Producto
+router.get('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom(isCheckExist),
+    validarCampos
+], getCheck);
 
 //Eliminar check
 router.delete('/:id', [

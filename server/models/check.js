@@ -9,15 +9,15 @@ const CheckSchema = Schema({
         type: String,
         required: [true, 'La descripción es obligatoria.']
     },
-    filmer_name: {
+    ig_filmer: {
         type: String,
         required: [true, 'El nombre del filmer es requerido.']
     },
-    contacto: {
+    ig_rider: {
         type: String,
         required: [true, 'El contacto es obligatorio.']
     },
-    img_filmer: {
+    img_rider: {
         type: String,
         required: [true, 'La url de la imagen de perfil es requerida.']
     },

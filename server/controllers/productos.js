@@ -17,6 +17,7 @@ const createProducto = async (req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
+
 //Obtener Productos
 const getProductos = async (req, res)=>{
     try {
@@ -27,6 +28,7 @@ const getProductos = async (req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
+
 //Actializar producto
 const updateProducto = async(req, res)=>{
     try {
