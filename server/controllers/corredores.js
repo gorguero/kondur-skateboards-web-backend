@@ -27,17 +27,14 @@ const createCorredor = async(req, res=response) => {
 }
 
 //Obtener corredores
-const getCorredor = async(req, res=response) => {
-    
+const getCorredores = async(req, res=response) => {
     try {
-        
         const corredores = await Corredor.find({estado: true});
-
-        res.status(200).json({
-            ok: true,
-            corredores
-        });
-
+        // res.status(200).json({
+        //     ok: true,
+        //     corredores
+        // });
+        res.json(corredores);
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -45,6 +42,15 @@ const getCorredor = async(req, res=response) => {
         });
     }
 }
+// const getCorredores = async (req, res)=>{
+//     try {
+//         const corredores = await Corredor.find({estado: true});
+//         res.json(corredores);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send('Hubo un error');
+//     }
+// }
 
 //Actualizar un corredor
 const updateCorredor = async(req, res=response) => {
@@ -96,7 +102,7 @@ const deleteCorredor = async(req, res) => {
 
 export {
     createCorredor,
-    getCorredor,
+    getCorredores,
     updateCorredor,
     deleteCorredor
 }

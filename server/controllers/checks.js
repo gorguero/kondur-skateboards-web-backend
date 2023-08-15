@@ -5,11 +5,11 @@ import Check from '../models/check.js';
 //Crear Check
 const createCheck = async(req, res = response) => {
 
-    const { titulo, descripcion, filmer_name, contacto, img_filmer, url_video } = req.body;
+    const { titulo, descripcion, ig_filmer, ig_rider, img_rider, url_video } = req.body;
 
     try {
         
-        const check = new Check( {titulo, descripcion, filmer_name, contacto, img_filmer, url_video} );
+        const check = new Check( {titulo, descripcion, ig_filmer, ig_rider, img_rider, url_video} );
 
         await check.save();
 
@@ -29,16 +29,13 @@ const createCheck = async(req, res = response) => {
 
 //Obtener Check
 const getCheck = async(req, res) => {
-
-    try {
-        
+    try {     
         const checks = await Check.find({estado: true});
-
-        res.status(201).json({
-            ok: true,
-            checks
-        });
-
+        // res.status(201).json({
+        //     ok: true,
+        //     checks
+        // });
+        res.json(checks);
     } catch (error) {
         console.log(error)
         res.status(500).json({
