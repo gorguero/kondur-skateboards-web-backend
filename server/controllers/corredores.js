@@ -52,6 +52,22 @@ const getCorredores = async(req, res=response) => {
 //     }
 // }
 
+//Buscar un Producto 
+const getCorredor = async(req, res)=>{
+    let corredor = await Corredor.findById(req.params.id);
+    try {
+        let corredor = await Corredor.findById(req.params.id);
+        if(!corredor){
+            res.status(404).json({msg:'No existe el rider'})
+        }
+        res.json(corredor);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
 //Actualizar un corredor
 const updateCorredor = async(req, res=response) => {
     
@@ -103,6 +119,7 @@ const deleteCorredor = async(req, res) => {
 export {
     createCorredor,
     getCorredores,
+    getCorredor,
     updateCorredor,
     deleteCorredor
 }
