@@ -30,7 +30,8 @@ const UsuarioSchema = Schema({
     },
     nickname: {
         type: String,
-        required: [true, 'El nickname es obligatorio']
+        required: [true, 'El nickname es obligatorio'],
+        unique: true
     },
     email: {
         type: String,
@@ -56,7 +57,7 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required: true,
-        default: 'USER_ROLE',
+        emun: ['ADMIN_ROLE', 'USER_ROLE'],
         default: 'USER_ROLE'
     },
     estado:{

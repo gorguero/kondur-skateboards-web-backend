@@ -23,7 +23,6 @@ const createUser = async(req, res=response) => {
         const token = await generarJWT( usuario.uid );
 
         res.status(201).json({
-            ok: true,
             usuario,
             token
         })
@@ -75,9 +74,11 @@ const updateUser = async(req, res = response) => {
 
         const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
 
+        const token = await generarJWT( usuario.uid );
+
         return res.json({
-            ok: true,
-            usuario
+            usuario,
+            token
         });
 
     } catch (error) {
@@ -89,33 +90,9 @@ const updateUser = async(req, res = response) => {
     }
 }
 
-//Eliminar usuario
-const deleteUser = async(req, res) => {
-    
-    const {id} = req.params;
-
-    try {
-
-        //Eliminado lógico
-        const usuario = await Usuario.findByIdAndUpdate(id, {estado: false}, {new: true});
-
-        return res.json({
-            usuario
-        });
-
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({
-            ok: false,
-            msg: 'Hubo un error al eliminar un usuario.'
-        });
-    }
-    
-}
 
 export {
     createUser,
     getUser,
     updateUser,
-    deleteUser,
 }

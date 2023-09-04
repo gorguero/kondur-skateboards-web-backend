@@ -18,7 +18,7 @@ app.use( cors() );
 app.use( express.json() ); //Lectura del json
 
 //Rutas
-app.use('/usuarios', usuarioRoutes); //Rutas de Usuarios
+app.use('/api/usuarios', usuarioRoutes); //Rutas de Usuarios
 app.use('/api/checks', checksRoutes); //Rutas de Checks
 app.use('/api/productos',productoRoutes); //Rutas de producto
 app.use('/api/team', corredoresRoutes);//Rutas de Team
