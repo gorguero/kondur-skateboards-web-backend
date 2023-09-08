@@ -39,11 +39,5 @@ const CheckSchema = Schema({
     }
 });
 
-//Cambiamos el id y ocultamos valores al response
-CheckSchema.method('toJSON', function() {
-    const { __v, _id, ...object } = this.toObject();
-    object.uid = _id;
-    return object;
-})
 
 export default model('Check', CheckSchema);

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {check} from "express-validator"
 
-import { createCorredor, deleteCorredor, getCorredores, updateCorredor } from "../controllers/corredores.js";
+import { createCorredor, deleteCorredor, getCorredor, getCorredores, updateCorredor } from "../controllers/corredores.js";
 import { validarCampos } from "../middlewares/validaciones.js";
 import { isBiografiaExist, isCorredorExist, isCorredorByIdExist } from "../helpers/db-validations.js";
 
@@ -21,6 +21,13 @@ router.post('/', [
 
 //Obtener corredores
 router.get('/', getCorredores);
+
+//Buscar un Producto
+router.get('/:id',[
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( isCorredorByIdExist ),
+    validarCampos
+], getCorredor);
 
 //Editar un corredor
 router.put('/:id', [
