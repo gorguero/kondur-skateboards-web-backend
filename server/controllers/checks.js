@@ -27,8 +27,8 @@ const createCheck = async(req, res = response) => {
     }
 }
 
-//Obtener Check
-const getCheck = async(req, res) => {
+//Obtener Checks
+const getChecks = async(req, res) => {
     try {     
         const checks = await Check.find({estado: true});
         // res.status(201).json({
@@ -89,10 +89,26 @@ const deleteCheck = async(req, res) => {
         });
     }
 }
+//Buscar un Check 
+const getCheck = async(req, res)=>{
+    let check = await Check.findById(req.params.id);
+    try {
+        let check = await Check.findById(req.params.id);
+        if(!check){
+            res.status(404).json({msg:'No existe el video'})
+        }
+        res.json(check);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
 
 export {
     createCheck,
-    getCheck,
+    getChecks,
     updateCheck,
+    getCheck,
     deleteCheck
 }
