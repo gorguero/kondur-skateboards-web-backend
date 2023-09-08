@@ -3,27 +3,20 @@ import Corredor from "../models/corredor.js";
 
 //Crear un nuevo corredor
 const createCorredor = async(req, res=response) => {
-
     const { nombre_rider, biografia, url_imagen, instagram, facebook } = req.body;
-
-    try {
-        
+    try {       
         const corredor = new Corredor({nombre_rider, biografia, url_imagen, instagram, facebook});
-
         await corredor.save();
-
-        res.status(201).json({
+           res.status(201).json({
             msg: 'Creado exitosamente',
             corredor
         })
-
     } catch (error) {
         console.log(error);
         res.status(400).json({
             msg: 'Hubo un error al crear un corredor'
         });
     }
-
 }
 
 //Obtener corredores
@@ -42,15 +35,6 @@ const getCorredores = async(req, res=response) => {
         });
     }
 }
-// const getCorredores = async (req, res)=>{
-//     try {
-//         const corredores = await Corredor.find({estado: true});
-//         res.json(corredores);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send('Hubo un error');
-//     }
-// }
 
 //Buscar un Producto 
 const getCorredor = async(req, res)=>{
