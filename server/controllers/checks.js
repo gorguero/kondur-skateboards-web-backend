@@ -31,11 +31,9 @@ const createCheck = async(req, res = response) => {
 const getCheck = async(req, res) => {
     try {     
         const checks = await Check.find({estado: true});
-        // res.status(201).json({
-        //     ok: true,
-        //     checks
-        // });
-        res.json(checks);
+        res.status(200).json({
+            checks
+        });
     } catch (error) {
         console.log(error)
         res.status(500).json({
