@@ -36,7 +36,7 @@ const getCorredores = async(req, res=response) => {
     }
 }
 
-//Buscar un Producto 
+//Buscar un Corredor 
 const getCorredor = async(req, res)=>{
     let corredor = await Corredor.findById(req.params.id);
     try {
