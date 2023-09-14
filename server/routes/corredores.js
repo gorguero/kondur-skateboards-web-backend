@@ -22,7 +22,7 @@ router.post('/', [
 //Obtener corredores
 router.get('/', getCorredores);
 
-//Buscar un Producto
+//Buscar un Corredor
 router.get('/:id',[
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isCorredorByIdExist ),
@@ -34,7 +34,7 @@ router.put('/:id', [
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isCorredorByIdExist ),
     check('nombre_rider', 'El nombre del corredor es obligatorio.').not().isEmpty(),
-    check('nombre_rider').custom( isCorredorExist ),
+    // check('nombre_rider').custom( isCorredorExist ),
     check('biografia', 'La biografia es obligatoria.').not().isEmpty(),
     check('biografia', 'Debe contener solamente 250 caracteres.').isLength({max: 250}),
     check('biografia').custom( isBiografiaExist ),
