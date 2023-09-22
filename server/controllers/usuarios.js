@@ -38,15 +38,15 @@ const createUser = async(req, res=response) => {
 }
 
 //Obtener usuarios
-const getUser = async(req, res) => {
+const getUsers = async(req, res) => {
     
     try {
         
-        const usuarios = await Usuario.find();
+        const usuarios = await Usuario.find({}, 'nombre apellido nickname email rol');
 
         return res.json({
             ok: true,
-            usuarios
+            usuarios,
         });
 
     } catch (error) {
@@ -93,6 +93,6 @@ const updateUser = async(req, res = response) => {
 
 export {
     createUser,
-    getUser,
+    getUsers,
     updateUser,
 }
