@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 
 import Usuario from '../models/usuario.js';
 import generarJWT from '../helpers/generarjwt.js';
+import getMenu from "../helpers/menu.js";
 
 const login = async(req, res=response) => {
 
@@ -35,7 +36,8 @@ const login = async(req, res=response) => {
     const token = await generarJWT( usuario.id );
     res.status(200).json({
         usuario,
-        token
+        token,
+        menu: getMenu( usuario.rol )
     });
 }
 
@@ -49,7 +51,8 @@ const renovarToken = async(req, res=response) => {
 
     res.json({
         token,
-        usuario
+        usuario,
+        menu: getMenu( usuario.rol )
     })
 
 }
