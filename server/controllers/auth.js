@@ -6,13 +6,13 @@ import generarJWT from '../helpers/generarjwt.js';
 
 const login = async(req, res=response) => {
 
-    const { email, password } = req.body;
+    const { nickname, password } = req.body;
 
-    //Validar si el email existe
-    const usuario = await Usuario.findOne({email});
+    //Validar si el nickname existe
+    const usuario = await Usuario.findOne({nickname});
     if( !usuario ){
         return res.status(400).json({
-            msg: 'Email inválido'
+            msg: 'Username inválido'
         });
     }
 

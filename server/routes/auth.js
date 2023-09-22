@@ -7,7 +7,7 @@ import { validarCampos } from '../middlewares/validaciones.js';
 const router = Router();
 
 router.post('/login', [
-    check('email', 'El correo es obligatorio.').isEmail(),
+    check('nickname', 'El username es obligatorio.').not().isEmpty(),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validarCampos
 ], login);
