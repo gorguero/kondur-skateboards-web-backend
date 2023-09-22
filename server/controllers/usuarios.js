@@ -42,7 +42,7 @@ const getUsers = async(req, res) => {
     
     try {
         
-        const usuarios = await Usuario.find({}, 'nombre apellido nickname email rol');
+        const usuarios = await Usuario.find({estado: true}, 'nombre apellido nickname email rol');
 
         return res.json({
             ok: true,
