@@ -34,10 +34,12 @@ const login = async(req, res=response) => {
 
     //Generamos un JWT
     const token = await generarJWT( usuario.id );
+
+    const menu = getMenu(usuario.rol);
     res.status(200).json({
         usuario,
         token,
-        menu: getMenu( usuario.rol )
+        menu
     });
 }
 
