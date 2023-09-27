@@ -16,9 +16,6 @@ const CorredorSchema = Schema({
     instagram:{
         type: String
     },
-    facebook:{
-        type: String
-    },
     creadoEn: {
         type: Date,
         default: Date.now()
