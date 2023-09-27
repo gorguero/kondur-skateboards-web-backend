@@ -3,16 +3,17 @@ import bcryptjs from 'bcryptjs';
 
 import Usuario from '../models/usuario.js';
 import generarJWT from '../helpers/generarjwt.js';
+import getMenu from "../helpers/menu.js";
 
 const login = async(req, res=response) => {
 
-    const { email, password } = req.body;
+    const { nickname, password } = req.body;
 
-    //Validar si el email existe
-    const usuario = await Usuario.findOne({email});
+    //Validar si el nickname existe
+    const usuario = await Usuario.findOne({nickname});
     if( !usuario ){
         return res.status(400).json({
-            msg: 'Email inválido'
+            msg: 'Username inválido'
         });
     }
 
@@ -32,13 +33,60 @@ const login = async(req, res=response) => {
     }
 
     //Generamos un JWT
-    const token = await generarJWT( usuario.id );
+    const token = await generarJWT( usuario );
+
+    const menu = getMenu(usuario.rol);
     res.status(200).json({
         usuario,
-        token
+        token,
+        menu
     });
 }
 
+const renovarToken = async(req, res=response) => {
+
+    const uid = req.uid;
+
+    const usuario = await Usuario.findById(uid);
+
+    const token = await generarJWT( usuario );
+
+
+    res.json({
+        token,
+        usuario,
+        menu: getMenu( usuario.rol )
+    })
+
+}
+
+const existeUsuario = async(req, res=response) => {
+
+    try {
+        
+        let usuario = await Usuario.findById(req.params.id);
+
+        if(!usuario){
+            res.status(400).json({
+                msg: 'Usuario inexistente',
+                usuario
+            })
+        }
+
+        res.status(200).json({
+            msg: 'Usuario existente',
+            usuario
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error')
+    }
+
+}
+
 export {
-    login
+    login,
+    renovarToken,
+    existeUsuario
 }

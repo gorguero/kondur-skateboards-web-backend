@@ -20,7 +20,7 @@ const createUser = async(req, res=response) => {
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
-        const token = await generarJWT( usuario.uid );
+        const token = await generarJWT( usuario );
 
         res.status(201).json({
             usuario,
@@ -38,15 +38,15 @@ const createUser = async(req, res=response) => {
 }
 
 //Obtener usuarios
-const getUser = async(req, res) => {
+const getUsers = async(req, res) => {
     
     try {
         
-        const usuarios = await Usuario.find();
+        const usuarios = await Usuario.find({estado: true}, 'nombre apellido nickname email rol');
 
         return res.json({
             ok: true,
-            usuarios
+            usuarios,
         });
 
     } catch (error) {
@@ -74,7 +74,7 @@ const updateUser = async(req, res = response) => {
 
         const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
 
-        const token = await generarJWT( usuario.uid );
+        const token = await generarJWT( usuario );
 
         return res.json({
             usuario,
@@ -93,6 +93,6 @@ const updateUser = async(req, res = response) => {
 
 export {
     createUser,
-    getUser,
+    getUsers,
     updateUser,
 }
