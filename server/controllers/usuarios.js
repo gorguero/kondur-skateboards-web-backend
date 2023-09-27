@@ -20,7 +20,7 @@ const createUser = async(req, res=response) => {
         //Aqui lo guarda en la base de datos
         await usuario.save();
 
-        const token = await generarJWT( usuario.uid );
+        const token = await generarJWT( usuario );
 
         res.status(201).json({
             usuario,
@@ -74,7 +74,7 @@ const updateUser = async(req, res = response) => {
 
         const usuario = await Usuario.findByIdAndUpdate(id, resto, {new: true});
 
-        const token = await generarJWT( usuario.uid );
+        const token = await generarJWT( usuario );
 
         return res.json({
             usuario,

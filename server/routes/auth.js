@@ -1,5 +1,5 @@
 import Router from 'express';
-import { login, renovarToken } from '../controllers/auth.js';
+import { existeUsuario, login, renovarToken } from '../controllers/auth.js';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validaciones.js';
 import validarJWT from '../middlewares/validar-jwt.js';
@@ -14,5 +14,9 @@ router.post('/login', [
 ], login);
 
 router.get('/renovartoken', validarJWT, renovarToken);
+
+router.get('/:id', [
+    check('id', 'No es un ID válido').isMongoId(),
+], existeUsuario);
 
 export default router;
