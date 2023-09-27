@@ -3,9 +3,9 @@ import Corredor from "../models/corredor.js";
 
 //Crear un nuevo corredor
 const createCorredor = async(req, res=response) => {
-    const { nombre_rider, biografia, url_imagen, instagram, facebook } = req.body;
+    const { nombre_rider, biografia, url_imagen, instagram } = req.body;
     try {       
-        const corredor = new Corredor({nombre_rider, biografia, url_imagen, instagram, facebook});
+        const corredor = new Corredor({nombre_rider, biografia, url_imagen, instagram});
         await corredor.save();
            res.status(201).json({
             msg: 'Creado exitosamente',
