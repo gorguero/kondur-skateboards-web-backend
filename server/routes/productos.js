@@ -16,8 +16,9 @@ router.post('/',[
     check('imagen', 'La url de la imagen es requerida.').not().isEmpty(),
     check('precio', 'El valor del precio es requerido.').not().isEmpty(),
     check('precio').custom(isValueMin),
-    check('stock', 'El valor del stock es requerido.').not().isEmpty(),
-    check('stock').custom(isValueMin),
+    check("tallas", "Debe proporcionar al menos una talla").isArray().notEmpty(),
+    // check('stock', 'El valor del stock es requerido.').not().isEmpty(),
+    // check('stock').custom(isValueMin),
     check('categoria', 'La categoria es requerida.').not().isEmpty(),
     validarCampos
 ],createProducto);
@@ -35,8 +36,9 @@ router.put('/:id',[
     check('imagen', 'La url de la imagen es requerida.').not().isEmpty(),
     check('precio', 'El valor del precio es requerido.').not().isEmpty(),
     check('precio').custom(isValueMin),
-    check('stock', 'El valor del stock es requerido.').not().isEmpty(),
-    check('stock').custom(isValueMin),
+    check("tallas", "Debe proporcionar al menos una talla").isArray().notEmpty(),
+    // check('stock', 'El valor del stock es requerido.').not().isEmpty(),
+    // check('stock').custom(isValueMin),
     check('categoria', 'La categoria es requerida.').not().isEmpty(),
     validarCampos
 ],updateProducto);

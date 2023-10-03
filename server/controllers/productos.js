@@ -29,33 +29,31 @@ const getProductos = async (req, res)=>{
     }
 }
 
-//Actializar producto
-const updateProducto = async(req, res)=>{
+const updateProducto = async (req, res) => {
     try {
-        const {nombreProducto, descripcion, imagen, precio, stock, categoria, medida, talle} = req.body;
+        const { nombreProducto, descripcion, imagen, precio, categoria, estado, tallas } = req.body;
         let producto = await Producto.findById(req.params.id);
 
-        if(!producto){
-            res.status(404),json({msj:"No exite el producto"})
+        if (!producto) {
+            return res.status(404).json({ msj: "No existe el producto" });
         }
 
         producto.nombreProducto = nombreProducto;
         producto.descripcion = descripcion;
         producto.imagen = imagen;
         producto.precio = precio;
-        producto.stock = stock;
         producto.categoria = categoria;
-        producto.medida = medida;
-        producto.talle = talle;
+        producto.estado = estado;
+        producto.tallas = tallas; // Actualiza las tallas
 
-        producto = await Producto.findOneAndUpdate({_id: req.params.id}, producto, {new: true})
+        producto = await producto.save(); // Guarda los cambios
         res.json(producto);
-        
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
     }
 }
+
 //Buscar un Producto 
 const getProducto = async(req, res)=>{
     let producto = await Producto.findById(req.params.id);
