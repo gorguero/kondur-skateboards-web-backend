@@ -3,7 +3,7 @@ import {check} from 'express-validator';
 
 import { isRoleValid, isEmailExist, isNicknameExist, isUserExist } from '../helpers/db-validations.js';
 import { validarCampos } from '../middlewares/validaciones.js';
-import {createUser, getUsers, updateUser} from '../controllers/usuarios.js';
+import {createUser, getUsers, updateUser, getUserById} from '../controllers/usuarios.js';
 import validarJWT from '../middlewares/validar-jwt.js';
 import { isAdminRole, tieneRol } from '../middlewares/validar-roles.js';
 
@@ -24,6 +24,9 @@ router.post( '/', [
 
 //Obtener usuario
 router.get( '/', validarJWT, getUsers )
+
+//Obtener usuario por id
+router.get( '/byid', getUserById )
 
 //Editar usuario
 router.put( '/:id', [
