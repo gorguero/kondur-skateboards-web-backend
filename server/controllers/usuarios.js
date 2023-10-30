@@ -65,9 +65,7 @@ const getUserById = async(req, res) => {
         
         const {data} = req.query;
 
-        // const userByNickname = await Usuario.findOne({nickname: data});
-
-        const userById = await Usuario.findById(data)
+        let userById = await Usuario.findById(data);
 
         return res.json({
             userById
