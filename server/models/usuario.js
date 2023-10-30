@@ -1,6 +1,14 @@
 import { Schema, model } from "mongoose";
 
 const direcciones = Schema({
+    provincia: {
+        type: String,
+        default: ''
+    },
+    ciudad: {
+        type: String,
+        default: ''
+    },
     calle1: {
         type: String,
         default: ''
