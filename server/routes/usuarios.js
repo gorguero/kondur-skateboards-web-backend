@@ -32,7 +32,6 @@ router.get( '/byid', getUserById )
 router.put( '/:id', [
     check('id', 'No es un ID válido').isMongoId(),
     check('id').custom( isUserExist ),
-    check('rol', "El rol es obligatorio.").not().isEmpty(),
     check('nombre', "El nombre es obligatorio.").not().isEmpty(),
     check('apellido', "El apellido es obligatorio.").not().isEmpty(),
     check('nickname', "El nombre de usuario es obligatorio.").not().isEmpty(),
