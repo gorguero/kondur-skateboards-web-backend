@@ -1,6 +1,14 @@
 import { Schema, model } from "mongoose";
 
 const direcciones = Schema({
+    provincia: {
+        type: String,
+        default: ''
+    },
+    ciudad: {
+        type: String,
+        default: ''
+    },
     calle1: {
         type: String,
         default: ''
@@ -54,6 +62,10 @@ const UsuarioSchema = Schema({
         type: Date,
         default: Date.now()
     },
+    nro_contacto: {
+        type: String,
+        unique: true
+    },
     rol: {
         type: String,
         required: true,
@@ -69,7 +81,6 @@ const UsuarioSchema = Schema({
 //Renombra el _id
 UsuarioSchema.method('toJSON', function() {
     const { __v, password, _id, ...object } = this.toObject();
-    object.uid = _id;
     return object;
 })
 

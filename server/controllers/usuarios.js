@@ -7,11 +7,11 @@ import generarJWT from '../helpers/generarjwt.js';
 //Crear usuario
 const createUser = async(req, res=response) => {
 
-    const { nombre, apellido, nickname, email, password, direcciones } = req.body;
+    const { nombre, apellido, nickname, email, password, direcciones, nro_contacto } = req.body;
 
     try{
 
-        const usuario = new Usuario( {nombre, apellido, nickname, email, password, direcciones} );
+        const usuario = new Usuario( { nombre, apellido, nickname, email, password, direcciones, nro_contacto} );
 
         //Encripta la contraseña
         const salt = bcryptjs.genSaltSync();
@@ -42,11 +42,33 @@ const getUsers = async(req, res) => {
     
     try {
         
-        const usuarios = await Usuario.find({estado: true}, 'nombre apellido nickname email rol');
+        const usuarios = await Usuario.find({estado: true});
 
         return res.json({
             ok: true,
             usuarios,
+        });
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Hubo un error al obtener un usuario.'
+        });
+    }
+}
+
+//Obtener usuario por nickname
+const getUserById = async(req, res) => {
+
+    try {
+        
+        const {data} = req.query;
+
+        let userById = await Usuario.findById(data);
+
+        return res.json({
+            userById
         });
 
     } catch (error) {
@@ -95,4 +117,5 @@ export {
     createUser,
     getUsers,
     updateUser,
+    getUserById
 }

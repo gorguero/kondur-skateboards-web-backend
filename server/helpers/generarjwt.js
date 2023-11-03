@@ -5,7 +5,7 @@ const generarJWT = ( user ) => {
     return new Promise( (resolve, reject) => {
 
         const payload = {
-            sub: user.uid,
+            id: user._id.toString(),
             nombres: user.nombre,
             apellidos: user.apellido,
             username: user.nickname,
