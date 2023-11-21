@@ -1,16 +1,37 @@
 import {Schema, model} from "mongoose";
 
-const tallaMedidaSchema = Schema({
-    nombre: {
-        type: String,
-        required: true
-    },
-    cantidad: {
+const tallas = Schema({
+    s: {
         type: Number,
-        required: true,
+        default: 0
+    },
+    m: {
+        type: Number,
+        default: 0
+    },
+    l: {
+        type: Number,
+        default: 0
+    },
+    xl: {
+        type: Number,
         default: 0
     }
 });
+ const medidas = Schema({
+    chico: {
+        type: Number,
+        default: 0
+    },
+    mediano: {
+        type: Number,
+        default: 0
+    },
+    grande: {
+        type: Number,
+        default: 0
+    }
+ })
 
 const productoSchema = Schema({
     nombreProducto: {
@@ -37,9 +58,10 @@ const productoSchema = Schema({
         type: String,
         required: true
     },
-    tallas: [
-        tallaMedidaSchema // Un array de tallas o medidas
-    ], 
+    tallas: tallas,
+    medidas:
+        medidas
+    , 
     estado:{
         type: Boolean,
         default: true

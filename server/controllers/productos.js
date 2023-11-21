@@ -6,12 +6,9 @@ const createProducto = async (req, res)=>{
     
     try {
         let producto;
-
         producto = new Producto(req.body);
-
         await producto.save();
         res.send(producto);
-        
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
@@ -31,7 +28,7 @@ const getProductos = async (req, res)=>{
 
 const updateProducto = async (req, res) => {
     try {
-        const { nombreProducto, descripcion, imagen, precio, categoria, estado, tallas } = req.body;
+        const { nombreProducto, descripcion, imagen, precio, categoria, estado, tallas, medidas } = req.body;
         let producto = await Producto.findById(req.params.id);
 
         if (!producto) {
@@ -44,7 +41,8 @@ const updateProducto = async (req, res) => {
         producto.precio = precio;
         producto.categoria = categoria;
         producto.estado = estado;
-        producto.tallas = tallas; // Actualiza las tallas
+        producto.tallas = tallas;
+        producto.medidas = medidas;
 
         producto = await producto.save(); // Guarda los cambios
         res.json(producto);
