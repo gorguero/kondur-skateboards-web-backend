@@ -50,6 +50,24 @@ const updateProducto = async (req, res) => {
         console.log(error);
         res.status(500).send('Hubo un error');
     }
+
+//     try{
+//         const {id} = req.params;
+//         const {_id,nombreProducto, descripcion, precio, estado, ...resto} = req.body;
+        
+//         const producto = await Producto.findOneAndUpdate({ _id: id }, resto, {new: true});
+//         console.log(producto);
+//         return res.json({
+            
+//             producto
+//         });
+//     } catch(error){
+//         console.log(error);
+//         res.status(500).json({
+//             ok: false,
+//             msg:'Hubo un error al actulizar un producto.'
+//         });
+//     }
 }
 
 //Buscar un Producto 
