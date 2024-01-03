@@ -8,6 +8,7 @@ import checksRoutes from './routes/checks.js';
 import productoRoutes from "./routes/productos.js";
 import corredoresRoutes from './routes/corredores.js';
 import ventasRoutes from './routes/ventas.js';
+import carritoRoutes from './routes/carrito.js'
 import authRoutes from './routes/auth.js';
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes) //Rutas de autenticación
 
 //Rutas de Ventas
 app.use('/api/ventas', ventasRoutes);
+app.use('/api/carrito', carritoRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);

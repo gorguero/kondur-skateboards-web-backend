@@ -35,8 +35,8 @@ router.put('/:id',[
     check('imagen', 'La url de la imagen es requerida.').not().isEmpty(),
     check('precio', 'El valor del precio es requerido.').not().isEmpty(),
     check('precio').custom(isValueMin),
-    check("tallas", "Debe proporcionar al menos una talla").isArray().notEmpty(),
-    check("medidas", "Debe proporcionar al menos una medida").isArray().notEmpty(),
+    // check("tallas", "Debe proporcionar al menos una talla").isArray().notEmpty(),
+    // check("medidas", "Debe proporcionar al menos una medida").isArray().notEmpty(),
     check('categoria', 'La categoria es requerida.').not().isEmpty(),
     validarCampos
 ],updateProducto);
