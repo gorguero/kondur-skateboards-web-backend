@@ -17,9 +17,21 @@ const createProducto = async (req, res)=>{
 
 //Obtener Productos
 const getProductos = async (req, res)=>{
+
+    const desde = Number(req.query.desde) || 0;
+
     try {
-        const productos = await Producto.find({estado: true});
-        res.json(productos);
+
+        const [ productos, totalProductos ] = await Promise.all([
+            Producto.find({estado: true}).skip(desde).limit(5),
+            Producto.countDocuments()
+        ]);
+        
+        res.status(200).json({
+            productos,
+            totalProductos
+        });
+        
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
@@ -72,7 +84,7 @@ const updateProducto = async (req, res) => {
 
 //Buscar un Producto 
 const getProducto = async(req, res)=>{
-    let producto = await Producto.findById(req.params.id);
+    
     try {
         let producto = await Producto.findById(req.params.id);
         if(!producto){
@@ -85,6 +97,7 @@ const getProducto = async(req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
+
 //Eliminar producto
 const deleteProducto = async(req, res)=>{
     try {
