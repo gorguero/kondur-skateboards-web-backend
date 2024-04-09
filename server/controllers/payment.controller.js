@@ -2,29 +2,31 @@ import { MercadoPagoConfig, Preference  } from 'mercadopago';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Configurar MercadoPago
+// Anclaje de cuenta MercadoPago
 const client = new MercadoPagoConfig({ accessToken: process.env.ACCESS_TOKEN });
 
-// Cria um objeto de preferência
+// Objeto de preferencia
 const preference = new Preference(client);
  
 const createOrder = async (req, res) => {
   try {
     console.log('Preferencia antes de la solicitud a MercadoPago:', preference);
+    const product = req.body;
     
     const result = await  preference.create(
       {body: {
         items: [
           {
-            title: 'Tabla kondur',
+            title: product.nombreProducto,
             currency_id: 'ARS',
-            description:'es una remerita linda',
-            unit_price: 70,
-            quantity: 1,
+            description: product.descripcion,
+            picture_url: product.imagen,
+            unit_price: Number(product.precio),
+            quantity: Number(product.cantidad),
           }
         ],
         back_urls: {
-          success: 'https://www.success.com',
+          success: 'https://localhost:4200',
           failure: 'http://www.failure.com',
           pending: 'http://www.pending.com'
         },
@@ -33,7 +35,6 @@ const createOrder = async (req, res) => {
       }}
     );
     console.log('Respuesta de MercadoPago:', result);
-  
     res.status(200).json(result.init_point);
   } catch (error) {
     console.error('Error al crear la orden:', error.message);
