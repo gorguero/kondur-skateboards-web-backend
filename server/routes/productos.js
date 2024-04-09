@@ -25,6 +25,9 @@ router.post('/',[
 //Obtener Productos
 router.get('/', getProductos);
 
+//Obtener Producto
+router.get('/product', getProducto);
+
 //Actualizar Producto
 router.put('/:id',[
     check('id', 'No es un ID válido').isMongoId(),
