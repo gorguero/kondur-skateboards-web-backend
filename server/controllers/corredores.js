@@ -21,13 +21,21 @@ const createCorredor = async(req, res=response) => {
 
 //Obtener corredores
 const getCorredores = async(req, res=response) => {
+
+    const desde = Number(req.query.desde) || 0;
+
     try {
-        const corredores = await Corredor.find({estado: true});
-        // res.status(200).json({
-        //     ok: true,
-        //     corredores
-        // });
-        res.json(corredores);
+        
+        const [corredores, totalCorredores] = await Promise.all([
+            Corredor.find({estado:true}).skip(desde).limit(5),
+            Corredor.countDocuments()
+        ]);
+
+        res.status(200).json({
+            corredores,
+            totalCorredores
+        });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
