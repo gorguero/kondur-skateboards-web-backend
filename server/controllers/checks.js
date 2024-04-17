@@ -27,14 +27,23 @@ const createCheck = async(req, res = response) => {
     }
 }
 
-//Obtener Checks
+//Obtener Checks paginados
 const getChecks = async(req, res) => {
+
+    const desde = Number(req.query.desde) || 0;
+
     try {     
-        const checks = await Check.find({estado: true});
-        res.json(checks);
-        // res.status(200).json({
-        //     checks
-        // });
+        
+        const [checks, totalChecks] = await Promise.all([
+            Check.find({estado: true}).skip(desde).limit(5),
+            Check.countDocuments()
+        ]);
+
+        res.status(200).json({
+            checks,
+            totalChecks
+        });
+
     } catch (error) {
         console.log(error)
         res.status(500).json({
