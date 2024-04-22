@@ -2,7 +2,6 @@ import Venta from '../models/venta.js';
 
 //Crear Venta
 const createVenta = async (req, res)=>{
-    
     try {
         let venta;
 
