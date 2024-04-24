@@ -16,7 +16,7 @@ const createProducto = async (req, res)=>{
 }
 
 //Obtener Productos
-const getProductos = async (req, res)=>{
+const getProductosPaginados = async (req, res)=>{
 
     const desde = Number(req.query.desde) || 0;
 
@@ -117,7 +117,7 @@ const deleteProducto = async(req, res)=>{
 
 export{
     createProducto,
-    getProductos,
+    getProductosPaginados,
     updateProducto,
     getProducto,
     deleteProducto
