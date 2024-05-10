@@ -1,9 +1,12 @@
 import { Router } from "express";
-import {createOrder} from '../controllers/payment.controller.js';
+import {createOrder, receiveWebHook} from '../controllers/payment.controller.js';
 import { createVenta } from "../controllers/ventas.js";
 const  router = Router();
 
 router.post('/createOrder', [createOrder, createVenta]);
+
+
+router.post('/webhook', receiveWebHook)
 
 // router.get('/succes',(req, res)=>{
 //     res.send('succes')
@@ -17,6 +20,6 @@ router.post('/createOrder', [createOrder, createVenta]);
 // })
 
 
-// router.post('/webhook', receiveWebHook)
+
 
 export default router
