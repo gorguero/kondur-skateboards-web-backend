@@ -50,10 +50,7 @@ const comprador = Schema({
 })
 
 const ventasSchema = Schema({
-    idVenta:{
-        type: String,
-        required: true
-    },
+
     user_id:{
         type: String
     },
@@ -62,8 +59,7 @@ const ventasSchema = Schema({
         required: true
     },
     total:{
-        type: Number,
-        required: true
+        type: Number
     },
     direccion_envio: direccion,
     comprador: comprador,

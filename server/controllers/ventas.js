@@ -1,20 +1,39 @@
 import Venta from '../models/venta.js';
 
 //Crear Venta
-const createVenta = async (req, res)=>{
+const createVenta = async (productos,facturacionInfo,usuario, estado, res) => {
     try {
-        let venta;
+        const venta = new Venta({
+            user_id: usuario,
+            productos: productos,
+            direccion_envio: {
+                provincia: facturacionInfo.provincia,
+                localidad: facturacionInfo.localidad,
+                direccion: facturacionInfo.direccion,
+                telefono: facturacionInfo.nro_contacto,
+                codPostal: facturacionInfo.codPostal,
+            },
+            comprador:{
+                nombre: facturacionInfo.nombre,
+                apellido: facturacionInfo.apellido,
+                nro_contacto: facturacionInfo.nro_contacto,
+                tipo_documentacion: facturacionInfo.tipo_documentacion,
+                numero_documentacion: facturacionInfo.numero_documentacion,
+            },
+            estado: estado,
+        });
 
-        venta = new Venta(req.body);
-
+        // Guardar la venta en la base de datos
         await venta.save();
-        res.send(venta);
+
+        // Enviar la venta creada como respuesta
+        res.status(201).json(venta);
         
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
     }
-}
+};
 
 //Obtener Ventas
 const getVentas = async (req, res)=>{
@@ -27,7 +46,31 @@ const getVentas = async (req, res)=>{
     }
 }
 
+//Obtener ventas paginadas
+const getPaginatedVentas = async(req, res) => {
+
+    const desde = Number(req.query.desde) || 0;
+
+    try {
+
+        const [ ventas, totalVentas ] = await Promise.all([
+            Venta.find({estado: 'approved'}).skip(desde).limit(5),
+            Venta.countDocuments()
+        ]);
+        
+        res.status(200).json({
+            ventas,
+            totalVentas
+        });
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error});
+    }
+
+}
+
 export{
     createVenta,
-    getVentas
+    getVentas,
+    getPaginatedVentas
 }
