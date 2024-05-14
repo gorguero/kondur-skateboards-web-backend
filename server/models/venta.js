@@ -59,8 +59,7 @@ const ventasSchema = Schema({
         required: true
     },
     total:{
-        type: Number,
-        required: true
+        type: Number
     },
     direccion_envio: direccion,
     comprador: comprador,

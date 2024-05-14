@@ -1,18 +1,27 @@
 import Venta from '../models/venta.js';
 
 //Crear Venta
-const createVenta = async (productos,factuacion,usuario, res) => {
+const createVenta = async (productos,facturacionInfo,usuario, estado, res) => {
     try {
-        let venta;
-        const ventaData = req.body;
-
-        // Si hay un user_id en los datos de la venta, asignarlo correctamente
-        if (ventaData.user_id) {
-            ventaData.user_id = req.body.user_id;
-        }
-
-        // Crear una nueva instancia de Venta con los datos recibidos
-        venta = new Venta(ventaData);
+        const venta = new Venta({
+            user_id: usuario,
+            productos: productos,
+            direccion_envio: {
+                provincia: facturacionInfo.provincia,
+                localidad: facturacionInfo.localidad,
+                direccion: facturacionInfo.direccion,
+                telefono: facturacionInfo.nro_contacto,
+                codPostal: facturacionInfo.codPostal,
+            },
+            comprador:{
+                nombre: facturacionInfo.nombre,
+                apellido: facturacionInfo.apellido,
+                nro_contacto: facturacionInfo.nro_contacto,
+                tipo_documentacion: facturacionInfo.tipo_documentacion,
+                numero_documentacion: facturacionInfo.numero_documentacion,
+            },
+            estado: estado,
+        });
 
         // Guardar la venta en la base de datos
         await venta.save();
@@ -25,32 +34,6 @@ const createVenta = async (productos,factuacion,usuario, res) => {
         res.status(500).send('Hubo un error');
     }
 };
-// const createVenta = async (req, res) => {
-//     try {
-//         let venta;
-//         const ventaData = req.body;
-
-//         // Si hay un user_id en los datos de la venta, asignarlo correctamente
-//         if (ventaData.user_id) {
-//             ventaData.user_id = req.body.user_id;
-//         }
-
-//         // Crear una nueva instancia de Venta con los datos recibidos
-//         venta = new Venta(ventaData);
-
-//         // Guardar la venta en la base de datos
-//         await venta.save();
-
-//         // Enviar la venta creada como respuesta
-//         res.status(201).json(venta);
-        
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send('Hubo un error');
-//     }
-// };
-
-
 //Obtener Ventas
 const getVentas = async (req, res)=>{
     try {

@@ -1,6 +1,6 @@
 import { MercadoPagoConfig, Preference, Payment} from "mercadopago";
 import dotenv from "dotenv";
-// import { createVenta } from "./ventas";
+import { createVenta } from "./ventas.js";
 dotenv.config();
 
 // Anclaje de cuenta MercadoPago
@@ -55,7 +55,7 @@ const createOrder = async (req, res) => {
           failure: "http://www.failure.com",
           pending: "http://www.pending.com",
         },
-        notification_url:"https://b293-181-10-133-19.ngrok-free.app/api/payment/webhook",
+        notification_url:"https://8b6c-2803-9800-9484-a332-d1e9-1edb-abdf-6de3.ngrok-free.app/api/payment/webhook",
         auto_return: "approved",
       },
     });
@@ -70,32 +70,26 @@ const createOrder = async (req, res) => {
 };
 
 const receiveWebHook = async (req, res) => {
-  const paymentInfo = req.query;
-  const idPago = req.query['data.id'];
-  console.log( paymentInfo );
+  try{
 
-  const paymentId = paymentInfo.id;
+    const paymentInfo = req.query;
+    const idPago = req.query['data.id'];
+    const productos = products;
+    const facturacionInfo = facturacion;
+    const usuario = userId;
+    console.log("ESTOS SON LOS PRODUCROS QUE SE MANDAN: ", productos);
+    console.log("ID DEL USUARIO SI HAY: ",usuario);
+    console.log("DATOS DE FACTURACION: ", facturacionInfo);
+    console.log("ESTE ES EL ID DEL PAGO: ", idPago);
+    const data = payment.get({id:idPago})
+    const estado = (await data).status;
+    console.log("ESTE ES EL ESTADO DEL PAGO: ",estado);
 
-  const data = payment.get({id:idPago})
-  .then(console.log)
-  .catch(console.log)
-  // try{
-  //   const response = await fetch(`https://api.mercadopago.com/v1/payments/${idPago}`,{
-  //     method: 'GET',
-  //     headers:{
-  //       'Authorizacion':`Bearer ${client}`
-  //     }
-  //   })
-  //   if(response.ok){
-  //     const data = await response.json();
-  //     console.log(data);
-  //   }
-  //   res.sendStatus(500);
-  // }catch(error){
-  //   console.error('Error:',error);
-  //   res.sendStatus(500);
-  // }
+    await createVenta(productos, facturacionInfo, usuario, estado, res);
+  }catch (error) {
+    console.error("Error en el webhook:", error.message);
+    res.status(500).json(error.message);
+  }
 };
-// ANDA LA RESPUESTA DE NGROK
 
 export { createOrder, receiveWebHook };
