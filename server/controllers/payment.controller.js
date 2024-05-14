@@ -15,7 +15,6 @@ let userId = "";
 const payment = new Payment(client);
 const createOrder = async (req, res) => {
   try {
-    // console.log("Preferencia antes de la solicitud a MercadoPago:", preference);
     products = req.body.productos;
     facturacion = req.body.facturacion;
     userId = req.body.user;
@@ -55,7 +54,7 @@ const createOrder = async (req, res) => {
           failure: "http://www.failure.com",
           pending: "http://www.pending.com",
         },
-        notification_url:"https://8b6c-2803-9800-9484-a332-d1e9-1edb-abdf-6de3.ngrok-free.app/api/payment/webhook",
+        notification_url:"https://2360-2803-9800-9484-a3ab-b8c9-7252-477c-9628.ngrok-free.app/api/payment/webhook",
         auto_return: "approved",
       },
     });
@@ -66,26 +65,27 @@ const createOrder = async (req, res) => {
     console.error("Error al crear la orden:", error.message);
     res.status(500).json(error.message);
   }
-  // crear venta
 };
 
 const receiveWebHook = async (req, res) => {
+
   try{
 
-    const paymentInfo = req.query;
     const idPago = req.query['data.id'];
-    const productos = products;
-    const facturacionInfo = facturacion;
-    const usuario = userId;
-    console.log("ESTOS SON LOS PRODUCROS QUE SE MANDAN: ", productos);
-    console.log("ID DEL USUARIO SI HAY: ",usuario);
-    console.log("DATOS DE FACTURACION: ", facturacionInfo);
-    console.log("ESTE ES EL ID DEL PAGO: ", idPago);
-    const data = payment.get({id:idPago})
-    const estado = (await data).status;
-    console.log("ESTE ES EL ESTADO DEL PAGO: ",estado);
 
-    await createVenta(productos, facturacionInfo, usuario, estado, res);
+    if( idPago !== undefined ){
+
+      const productos = products;
+      const facturacionInfo = facturacion;
+      const usuario = userId;
+
+      const data = await payment.get({ id: idPago });
+      console.log("ESTO ES DATA", data);
+      const estado = data.status;
+
+      await createVenta(productos, facturacionInfo, usuario, estado, res);
+    }
+    
   }catch (error) {
     console.error("Error en el webhook:", error.message);
     res.status(500).json(error.message);
