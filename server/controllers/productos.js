@@ -16,7 +16,7 @@ const createProducto = async (req, res)=>{
 }
 
 //Obtener Productos
-const getProductos = async (req, res)=>{
+const getProductosPaginados = async (req, res)=>{
 
     const desde = Number(req.query.desde) || 0;
 
@@ -98,6 +98,28 @@ const getProducto = async(req, res)=>{
     }
 }
 
+// Obtener todos los productos
+const getProductsFilter = async(req, res) => {
+
+    const tipos_productos = ['indumentaria', 'tablas', 'lijas'];
+
+    const tipoProducto = req.query.tipo;
+    if( !tipos_productos.includes( tipoProducto ) ) return res.status(400).json({msg: 'No existe ese tipo de producto'});
+
+    try {
+        let productos = await Producto.find({categoria: `${tipoProducto}`});
+        if(!productos){
+            res.status(400).json({msg:'No encontramos productos.'});
+        }
+
+        res.json(productos);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json('Hubo un error, comuniquese con su administrador.');
+    }
+
+}
+
 //Eliminar producto
 const deleteProducto = async(req, res)=>{
     try {
@@ -117,8 +139,9 @@ const deleteProducto = async(req, res)=>{
 
 export{
     createProducto,
-    getProductos,
-    updateProducto,
+    getProductosPaginados,
     getProducto,
-    deleteProducto
+    getProductsFilter,
+    updateProducto,
+    deleteProducto,
 }
