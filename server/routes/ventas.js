@@ -1,5 +1,5 @@
 import express from "express";
-import { createVenta,getVentas } from "../controllers/ventas.js";
+import { createVenta,getVentas,getPaginatedVentas } from "../controllers/ventas.js";
 
 const router = express.Router();
 
@@ -7,7 +7,9 @@ const router = express.Router();
 // router.post('/', createVenta);
 
 //Obtener Ventas
-router.get('/', getVentas);
 router.post('/', createVenta)
+
+router.get('/all', getVentas);
+router.get('/', getPaginatedVentas);
 
 export default router;

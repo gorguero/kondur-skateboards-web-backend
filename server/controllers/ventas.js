@@ -34,6 +34,7 @@ const createVenta = async (productos,facturacionInfo,usuario, estado, res) => {
         res.status(500).send('Hubo un error');
     }
 };
+
 //Obtener Ventas
 const getVentas = async (req, res)=>{
     try {
@@ -44,7 +45,32 @@ const getVentas = async (req, res)=>{
         res.status(500).send('Hubo un error');
     }
 }
+
+//Obtener ventas paginadas
+const getPaginatedVentas = async(req, res) => {
+
+    const desde = Number(req.query.desde) || 0;
+
+    try {
+
+        const [ ventas, totalVentas ] = await Promise.all([
+            Venta.find({estado: 'approved'}).skip(desde).limit(5),
+            Venta.countDocuments()
+        ]);
+        
+        res.status(200).json({
+            ventas,
+            totalVentas
+        });
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error});
+    }
+
+}
+
 export{
     createVenta,
-    getVentas
+    getVentas,
+    getPaginatedVentas
 }
