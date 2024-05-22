@@ -5,11 +5,6 @@ const getMenu = (rol = 'USER_ROLE') => {
           titulo: 'Mi Perfil',
           icono: 'bi bi-person me-2',
           url: '/sesion/MiPerfil'
-        },
-        {
-          titulo: 'Mis compras',
-          icono: 'bi bi-person me-2',
-          url: '/sesion/MiPerfil'
         }
     ];
 
