@@ -26,7 +26,7 @@ router.post( '/', [
 router.get( '/', validarJWT, getUsers )
 
 //Obtener usuario por id
-router.get( '/byid', getUserById )
+router.get( '/:id', getUserById )
 
 //Editar usuario
 router.put( '/:id', [
