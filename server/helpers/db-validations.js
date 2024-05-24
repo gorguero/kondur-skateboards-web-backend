@@ -21,6 +21,10 @@ const isUserExist = async(id) => {
     const existUser = await Usuario.findById(id);
     if( !existUser ) throw new Error(`No existe un usuario con el id ${id}`);
 }
+const isNroContactExist = async(nro_contacto = '') => {
+    const existNroContact = await Usuario.findOne({nro_contacto});
+    if( existNroContact ) throw new Error(`El número de contacto ingresado (${nro_contacto}) ya está registrado.`);
+}
 
 
 // Validations for Checks
@@ -79,6 +83,7 @@ export {
     isEmailExist,
     isNicknameExist,
     isUserExist,
+    isNroContactExist,
     isTitleExist,
     isDescriptionExist,
     isUrlVideoExist,

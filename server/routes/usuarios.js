@@ -1,7 +1,7 @@
 import Router from 'express';
 import {check} from 'express-validator';
 
-import { isRoleValid, isEmailExist, isNicknameExist, isUserExist } from '../helpers/db-validations.js';
+import { isRoleValid, isEmailExist, isNicknameExist, isUserExist, isNroContactExist } from '../helpers/db-validations.js';
 import { validarCampos } from '../middlewares/validaciones.js';
 import {createUser, getUsers, updateUser, getUserById} from '../controllers/usuarios.js';
 import validarJWT from '../middlewares/validar-jwt.js';
@@ -19,6 +19,8 @@ router.post( '/', [
     check('email', "El email es obligatorio.").not().isEmpty(),
     check('email', "Ingrese un email válido.").isEmail(),
     check('email').custom( isEmailExist ),
+    check('nro_contacto', "El número de contacto es requerido.").not().isEmpty(),
+    check('nro_contacto').custom( isNroContactExist ),
     validarCampos
 ] , createUser )
 
