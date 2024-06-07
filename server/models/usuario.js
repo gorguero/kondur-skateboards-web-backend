@@ -21,7 +21,7 @@ const direcciones = Schema({
         type: String,
         default: ''
     },
-    codpostal: {
+    codPostal: {
         type: String,
         default: ''
     }

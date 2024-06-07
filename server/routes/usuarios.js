@@ -31,19 +31,7 @@ router.get( '/', validarJWT, getUsers )
 router.get( '/:id', getUserById )
 
 //Editar usuario
-router.put( '/:id', [
-    check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom( isUserExist ),
-    check('nombre', "El nombre es obligatorio.").not().isEmpty(),
-    check('apellido', "El apellido es obligatorio.").not().isEmpty(),
-    check('nickname', "El nombre de usuario es obligatorio.").not().isEmpty(),
-    check('nickname').custom( isNicknameExist ),
-    // check('password', "La contraseña debe ser mayor a 6 caracteres.").isLength({min:6}),
-    check('email', "El email es obligatorio.").isEmail(),
-    check('email').custom( isEmailExist ),
-    // check('rol').custom( isRoleValid ),
-    validarCampos
-],updateUser )
+router.put( '/:id',updateUser )
 
 
 export default router;

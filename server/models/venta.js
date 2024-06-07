@@ -52,7 +52,8 @@ const comprador = Schema({
 const ventasSchema = Schema({
 
     user_id:{
-        type: String
+        type: String,
+        required:true
     },
     productos:{
         type: Array,
