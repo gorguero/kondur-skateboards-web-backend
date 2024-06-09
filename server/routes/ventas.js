@@ -1,15 +1,16 @@
 import express from "express";
-import { createVenta,getVentas,getPaginatedVentas } from "../controllers/ventas.js";
+import { createVenta,getPaginatedVentas, getVentasByUserId, getVentaById, generatePDFById } from "../controllers/ventas.js";
 
 const router = express.Router();
-
-//Agregar Venta
-// router.post('/', createVenta);
 
 //Obtener Ventas
 router.post('/', createVenta)
 
-router.get('/all', getVentas);
 router.get('/', getPaginatedVentas);
+router.get('/usuario/:id',getVentasByUserId);
+router.get('/detalle/:id', getVentaById);
+
+// Generar PDF
+router.get('/generate-pdf/:id', generatePDFById);
 
 export default router;
