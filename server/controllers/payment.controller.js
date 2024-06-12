@@ -1,6 +1,7 @@
 import { MercadoPagoConfig, Preference, Payment} from "mercadopago";
 import dotenv from "dotenv";
 import { createVenta } from "./ventas.js";
+import { reducirStock } from "./productos.js";
 dotenv.config();
 
 // Anclaje de cuenta MercadoPago
@@ -54,12 +55,11 @@ const createOrder = async (req, res) => {
           failure: "http://www.failure.com",
           pending: "http://www.pending.com",
         },
-        notification_url:"https://2360-2803-9800-9484-a3ab-b8c9-7252-477c-9628.ngrok-free.app/api/payment/webhook",
+        notification_url:"https://0417-2803-9800-9484-a332-857b-5d1e-8ae0-6c1f.ngrok-free.app/api/payment/webhook",
         auto_return: "approved",
       },
     });
     
-    // console.log("MERCADOPAGO API: ", result);
     res.status(200).json(result.init_point);
   } catch (error) {
     console.error("Error al crear la orden:", error.message);
@@ -68,28 +68,35 @@ const createOrder = async (req, res) => {
 };
 
 const receiveWebHook = async (req, res) => {
-
-  try{
-
+  try {
     const idPago = req.query['data.id'];
 
-    if( idPago !== undefined ){
-
+    if (idPago !== undefined) {
       const productos = products;
       const facturacionInfo = facturacion;
-      const usuario = userId;
-
+      const usuario = userId; 
+      
+      // Convertir productos a una cadena JSON para una mejor visualización
+      console.log(`ESTO SON LOS PRODUCTOS DE LOS QUE SACAS LOS DATOS: ${JSON.stringify(productos, null, 2)}`);
+      
       const data = await payment.get({ id: idPago });
-      console.log("ESTO ES DATA", data);
       const estado = data.status;
 
       await createVenta(productos, facturacionInfo, usuario, estado, res);
+
+      // Reducir el stock de los productos comprados
+      for (const producto of productos) {
+        const { _id, cantidad, talla, medida } = producto;
+        console.log(`Reduciendo stock para producto ID: ${_id}, cantidad: ${cantidad}, talla: ${talla}, medida: ${medida}`);
+        await reducirStock(_id, cantidad, talla, medida);
+      }
     }
-    
-  }catch (error) {
+  } catch (error) {
     console.error("Error en el webhook:", error.message);
     res.status(500).json(error.message);
   }
 };
+
+
 
 export { createOrder, receiveWebHook };
