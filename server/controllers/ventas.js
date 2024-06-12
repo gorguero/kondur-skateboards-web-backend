@@ -124,20 +124,22 @@ const getVentaById = async (req, res)=>{
 const createPDF = (orderNumber, orderItems, shippingDetails) => {
     return new Promise((resolve, reject) => {
         const doc = new PDFDocument();
-        const fileName = `detalle-compra-${orderNumber}.pdf`; // Nombre del archivo con el ID de la venta
-        const filePath = path.join(__dirname, '..', fileName);
-        const stream = fs.createWriteStream(filePath);
-
-        doc.pipe(stream);
+        const buffers = [];
+        
+        doc.on('data', buffers.push.bind(buffers));
+        doc.on('end', () => {
+            const pdfData = Buffer.concat(buffers);
+            resolve({ pdfData, fileName: `detalle-compra-${orderNumber}.pdf` });
+        });
 
         doc.fontSize(20).text(`DETALLE DE COMPRA #${orderNumber}`, { align: 'center' });
 
         const tableData = {
             headers: ['Productos', 'Precio', 'Cantidad', 'Total'],
             rows: orderItems.map(item => [
-                `${item.name}`, 
-                `$${item.price}`, 
-                item.quantity, 
+                `${item.name}`,
+                `$${item.price}`,
+                item.quantity,
                 `$${item.total}`
             ])
         };
@@ -157,9 +159,6 @@ const createPDF = (orderNumber, orderItems, shippingDetails) => {
         doc.text(`Teléfono: ${shippingDetails.phone}`);
 
         doc.end();
-
-        stream.on('finish', () => resolve(fileName)); // Resolvemos con el nombre del archivo
-        stream.on('error', (err) => reject(err));
     });
 };
 
@@ -191,10 +190,12 @@ const generatePDFById = async (req, res) => {
         };
 
         // Generar el PDF
-        const fileName = await createPDF(venta._id, orderItems, shippingDetails);
+        const { pdfData, fileName } = await createPDF(venta._id, orderItems, shippingDetails);
 
         // Enviar el archivo PDF generado al cliente
-        res.download(path.join(__dirname, '..', fileName), fileName);
+        res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+        res.setHeader('Content-type', 'application/pdf');
+        res.send(pdfData);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al generar el PDF');
