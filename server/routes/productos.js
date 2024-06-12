@@ -1,6 +1,6 @@
 import express from "express";
 import { check } from "express-validator";
-import { createProducto, getProducto, getProductosPaginados, getProductsFilter,updateProducto,deleteProducto } from "../controllers/productos.js";
+import { createProducto, getProducto, getProductosPaginados, getProductsFilter,updateProducto,deleteProducto,reducirStock } from "../controllers/productos.js";
 import { isProductNameExist, isDescriptionProductExist, isValueMin, isProductExistById } from "../helpers/db-validations.js";
 import { validarCampos } from "../middlewares/validaciones.js";
 
@@ -27,9 +27,6 @@ router.get('/', getProductosPaginados);
 
 //Obtener todos los productos
 router.get('/filters', getProductsFilter);
-
-//Obtener Producto ?
-// router.get('/product', getProducto);
 
 //Actualizar Producto
 router.put('/:id',[
@@ -62,4 +59,20 @@ router.delete('/:id',[
     validarCampos
 ], deleteProducto);
 
+// Ruta de prueba para reducir el stock
+router.post('/probar-reduccion-stock', async (req, res) => {
+    try {
+      const productos = req.body.productos; // Espera recibir un array de productos en el cuerpo de la solicitud
+  
+      for (const producto of productos) {
+        const { id, cantidad, talla, medida } = producto;
+        await reducirStock(id, cantidad, talla, medida);
+      }
+  
+      res.status(200).json({ message: 'Stock reducido correctamente' });
+    } catch (error) {
+      console.error('Error al reducir el stock:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  });
 export default router;

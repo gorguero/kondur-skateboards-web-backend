@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 // Definir __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 //Crear Venta
 const createVenta = async (productos,facturacionInfo,usuario, estado, res) => {
     try {
@@ -190,10 +191,10 @@ const generatePDFById = async (req, res) => {
         };
 
         // Generar el PDF
-        const fileName = await createPDF(venta._id, orderItems, shippingDetails); // Obtenemos el nombre del archivo
+        const fileName = await createPDF(venta._id, orderItems, shippingDetails);
 
         // Enviar el archivo PDF generado al cliente
-        res.download(path.join(__dirname, '..', fileName), fileName); // Descargamos el archivo con el nombre adecuado
+        res.download(path.join(__dirname, '..', fileName), fileName);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al generar el PDF');
