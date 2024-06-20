@@ -55,8 +55,8 @@ const createOrder = async (req, res) => {
           failure: "http://www.failure.com",
           pending: "http://www.pending.com",
         },
-        notification_url:"https://0417-2803-9800-9484-a332-857b-5d1e-8ae0-6c1f.ngrok-free.app/api/payment/webhook",
-        auto_return: "approved",
+        notification_url:"https://fc06-2803-9800-9484-a332-5c03-62c5-ed-c26d.ngrok-free.app/api/payment/webhook",
+        // auto_return: "approved",
       },
     });
     
@@ -76,7 +76,7 @@ const receiveWebHook = async (req, res) => {
       const facturacionInfo = facturacion;
       const usuario = userId; 
       
-      // Convertir productos a una cadena JSON para una mejor visualización
+      // Convertir productos a una cadena JSON 
       console.log(`ESTO SON LOS PRODUCTOS DE LOS QUE SACAS LOS DATOS: ${JSON.stringify(productos, null, 2)}`);
       
       const data = await payment.get({ id: idPago });
