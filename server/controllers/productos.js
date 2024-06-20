@@ -34,6 +34,37 @@ const getProductosPaginados = async (req, res) => {
   }
 };
 
+//Obtener Productos
+const getProducts = async (req, res)=>{
+  try {
+      const productos = await Producto.find({estado: true});
+      res.status(200).json(productos);
+  } catch (error) {
+      console.log(error);
+      res.status(500).send('Hubo un error');
+  }
+}
+// Obtener productos paginados
+const getProductsFilter = async (req, res) => {
+  const tipos_productos = ["indumentaria", "tablas", "lijas"];
+
+  const tipoProducto = req.query.tipo;
+  if (!tipos_productos.includes(tipoProducto))
+    return res.status(400).json({ msg: "No existe ese tipo de producto" });
+
+  try {
+    let productos = await Producto.find({ categoria: `${tipoProducto}`, estado: true });
+    if (!productos) {
+      res.status(400).json({ msg: "No encontramos productos." });
+    }
+
+    res.json(productos);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Hubo un error, comuniquese con su administrador.");
+  }
+};
+
 const updateProducto = async (req, res) => {
   try {
     const {
@@ -83,26 +114,7 @@ const getProducto = async (req, res) => {
   }
 };
 
-// Obtener todos los productos
-const getProductsFilter = async (req, res) => {
-  const tipos_productos = ["indumentaria", "tablas", "lijas"];
 
-  const tipoProducto = req.query.tipo;
-  if (!tipos_productos.includes(tipoProducto))
-    return res.status(400).json({ msg: "No existe ese tipo de producto" });
-
-  try {
-    let productos = await Producto.find({ categoria: `${tipoProducto}` });
-    if (!productos) {
-      res.status(400).json({ msg: "No encontramos productos." });
-    }
-
-    res.json(productos);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json("Hubo un error, comuniquese con su administrador.");
-  }
-};
 
 // Función para reducir el stock de un producto
 const reducirStock = async (_id, cantidad, talla, medida) => {
@@ -173,6 +185,7 @@ export {
   createProducto,
   getProductosPaginados,
   getProducto,
+  getProducts,
   getProductsFilter,
   updateProducto,
   reducirStock,
