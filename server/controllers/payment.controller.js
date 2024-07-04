@@ -14,6 +14,7 @@ let facturacion = {};
 let userId = "";
 
 const payment = new Payment(client);
+
 const createOrder = async (req, res) => {
   try {
     products = req.body.productos;
@@ -55,11 +56,11 @@ const createOrder = async (req, res) => {
           failure: "http://www.failure.com",
           pending: "http://www.pending.com",
         },
-        notification_url:"https://fc06-2803-9800-9484-a332-5c03-62c5-ed-c26d.ngrok-free.app/api/payment/webhook",
+        notification_url:"https://42b7-2803-9800-9484-a332-907f-c17b-38d2-3b46.ngrok-free.app/api/payment/webhook",
         // auto_return: "approved",
       },
     });
-    
+  
     res.status(200).json(result.init_point);
   } catch (error) {
     console.error("Error al crear la orden:", error.message);

@@ -181,6 +181,7 @@ const deleteProducto = async (req, res) => {
   }
 };
 
+
 export {
   createProducto,
   getProductosPaginados,

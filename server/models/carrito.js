@@ -25,7 +25,7 @@ const carritoSchema = Schema({
     },
     creado_en: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 
 })

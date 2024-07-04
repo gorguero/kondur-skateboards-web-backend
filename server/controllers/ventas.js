@@ -1,4 +1,4 @@
-import Venta from '../models/venta.js';
+import { Venta } from '../services/ventaService.js';
 import PDFDocument from 'pdfkit-table';
 import fs from 'fs';
 import path from 'path';
@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 //Crear Venta
 const createVenta = async (productos,facturacionInfo,usuario, estado, res) => {
     try {
+        
         const venta = new Venta({
             user_id: usuario,
             productos: productos,
@@ -201,6 +202,7 @@ const generatePDFById = async (req, res) => {
         res.status(500).send('Error al generar el PDF');
     }
 };
+
 
 export{
     createVenta,
