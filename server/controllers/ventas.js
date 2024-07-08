@@ -56,27 +56,44 @@ const getVentas = async (req, res)=>{
 }
 
 //Obtener ventas paginadas
-const getPaginatedVentas = async(req, res) => {
-
+const getPaginatedVentas = async (req, res) => {
     const desde = Number(req.query.desde) || 0;
+    const nombreCliente = req.query.nombreCliente || '';
+    const fechaInicio = req.query.fechaInicio || '';
+    const fechaFin = req.query.fechaFin || '';
 
     try {
+        // Crear un objeto de consulta
+        let query = { estado: 'approved' };
 
-        const [ ventas, totalVentas ] = await Promise.all([
-            Venta.find({estado: 'approved'}).skip(desde).limit(5),
-            Venta.countDocuments()
+        // Filtrar por nombre de cliente
+        if (nombreCliente) {
+            query['comprador.nombre'] = { $regex: nombreCliente, $options: 'i' };
+        }
+
+        // Filtrar por rango de fechas
+        if (fechaInicio && fechaFin) {
+            query['creado_en'] = {
+                $gte: new Date(fechaInicio),
+                $lte: new Date(fechaFin)
+            };
+        }
+
+        const [ventas, totalVentas] = await Promise.all([
+            Venta.find(query).skip(desde).limit(5),
+            Venta.countDocuments(query)
         ]);
-        
+
         res.status(200).json({
             ventas,
             totalVentas
         });
-    }catch(error){
-        console.log(error)
-        res.status(500).json({error});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
     }
+};
 
-}
 
 // Obtener venta segun el id del usuario
 const getVentasByUserId = async (req, res) => {
