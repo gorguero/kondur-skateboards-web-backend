@@ -10,6 +10,7 @@ import corredoresRoutes from './routes/corredores.js';
 import ventasRoutes from './routes/ventas.js';
 import authRoutes from './routes/auth.js';
 import paymentRouters from './routes/payment.js';
+import statsRoutes from './routes/stats.js';
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use('/api/payment', paymentRouters); //Rutas de pago
 
 //Rutas de Ventas
 app.use('/api/ventas', ventasRoutes);
+
+//Rutas de estadistica
+app.use('/api/stats', statsRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Puerto ${process.env.PORT} en marcha`);
