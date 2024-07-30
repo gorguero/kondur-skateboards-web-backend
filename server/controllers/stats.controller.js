@@ -1,5 +1,6 @@
 import Producto from "../models/producto.js";
 import { Venta } from "../services/ventaService.js";
+
 //Total de Productos por Categoría
 const getTotalProductosPorCategoria = async (req, res) => {
   try {
@@ -92,7 +93,9 @@ const getProductosMasVendidos = async (req, res) => {
       { $unwind: "$productos" },
       {
         $group: {
-          _id: "$productos.nombreProducto",
+          _id: "$productos._id", // Cambia esto para agrupar por el id del producto
+          nombreProducto: { $first: "$productos.nombreProducto" }, // Agrega el nombre del producto
+          imagenUrl:{ $first: "$productos.imagen" },
           total: { $sum: "$productos.cantidad" },
         },
       },
