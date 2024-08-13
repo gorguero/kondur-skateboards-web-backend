@@ -1,6 +1,6 @@
 import express from "express";
 import { check } from "express-validator";
-import { createProducto, getProducto,getProducts, getProductosPaginados, getProductsFilter,updateProducto,deleteProducto,reducirStock } from "../controllers/productos.js";
+import { createProducto, getProducto,getProducts, getProductosPaginados, getPaginatedProductos, getProductsFilter,updateProducto,deleteProducto,reducirStock } from "../controllers/productos.js";
 import { isProductNameExist, isDescriptionProductExist, isValueMin, isProductExistById } from "../helpers/db-validations.js";
 import { validarCampos } from "../middlewares/validaciones.js";
 
@@ -24,6 +24,10 @@ router.post('/',[
 
 //Obtener Productos
 router.get('/', getProductosPaginados);
+
+//Obtener Productos PARA ADMIN
+router.get('/productos', getPaginatedProductos);
+
 router.get('/productos-activos', getProducts);
 
 //Obtener todos los productos

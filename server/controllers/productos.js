@@ -34,6 +34,36 @@ const getProductosPaginados = async (req, res) => {
   }
 };
 
+//Obtener productos PARA ADMIN
+const getPaginatedProductos = async (req, res) => {
+  const desde = Number(req.query.desde) || 0;
+  const nombreProducto = req.query.nombreProducto || '';
+
+  try {
+      // Crear un objeto de consulta
+      let query = { estado: true };
+
+      // Filtrar por nombre de producto
+      if (nombreProducto) {
+          query['nombreProducto'] = { $regex: nombreProducto, $options: 'i' };
+      }
+
+      const [productos, totalProductos] = await Promise.all([
+          Producto.find(query).skip(desde).limit(5),
+          Producto.countDocuments(query)
+      ]);
+
+      res.status(200).json({
+          productos,
+          totalProductos
+      });
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ error });
+  }
+};
+
+
 //Obtener Productos
 const getProducts = async (req, res)=>{
   try {
@@ -185,6 +215,7 @@ const deleteProducto = async (req, res) => {
 export {
   createProducto,
   getProductosPaginados,
+  getPaginatedProductos,
   getProducto,
   getProducts,
   getProductsFilter,
